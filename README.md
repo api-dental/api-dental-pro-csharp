@@ -40,21 +40,21 @@ APIDentalProClient client = new();
 
 EligibilityRequestParams parameters = new()
 {
-    Payer = new("id"),
+    Payer = new("94276"),
     Provider = new()
     {
-        Npi = "npi",
-        TaxID = "tax_id",
+        Npi = "1447364856",
+        TaxID = "270872579",
     },
     Subscriber = new()
     {
-        Dob = DateOnly.Parse("2019-12-27"),
-        FirstName = "first_name",
-        GroupNumber = "group_number",
-        LastName = "last_name",
-        MemberID = "member_id",
+        FirstName = "Carlene",
+        LastName = "Ross",
+        MemberID = "118882775601",
+        GroupNumber = "20010-10003",
+        Dob = DateOnly.Parse("1953-02-13"),
     },
-    Version = "REPLACE_ME",
+    Version = "v2",
 };
 
 var response = await client.Eligibility.Request(parameters);
