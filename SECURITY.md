@@ -20,7 +20,7 @@ or products provided by API Dental Pro, please follow the respective company's s
 
 ### API Dental Pro Terms and Policies
 
-Please contact support@api.dental for any questions or concerns regarding the security of our services.
+Please contact info@api.dental for any questions or concerns regarding the security of our services.
 
 ---
 
