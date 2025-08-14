@@ -7,9 +7,11 @@
 >
 > **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/api-dental/api-dental-pro-csharp/issues/new).
 
-The API Dental Pro C# SDK provides convenient access to the API Dental Pro REST API from applications written in C#.
+The API Dental Pro C# SDK provides convenient access to the [API Dental Pro REST API](https://api.dental/docs) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
+
+The REST API documentation can be found on [api.dental](https://api.dental/docs).
 
 ## Installation
 
