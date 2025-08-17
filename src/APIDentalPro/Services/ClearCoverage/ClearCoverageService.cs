@@ -2,15 +2,14 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using APIDentalPro.Models.ClearCoverage;
-using APIDentalPro = APIDentalPro;
 
 namespace APIDentalPro.Services.ClearCoverage;
 
 public sealed class ClearCoverageService : IClearCoverageService
 {
-    readonly APIDentalPro::IAPIDentalProClient _client;
+    readonly IAPIDentalProClient _client;
 
-    public ClearCoverageService(APIDentalPro::IAPIDentalProClient client)
+    public ClearCoverageService(IAPIDentalProClient client)
     {
         _client = client;
     }
@@ -27,7 +26,7 @@ public sealed class ClearCoverageService : IClearCoverageService
             .ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            throw new APIDentalPro::HttpException(
+            throw new HttpException(
                 response.StatusCode,
                 await response.Content.ReadAsStringAsync().ConfigureAwait(false)
             );
@@ -35,7 +34,7 @@ public sealed class ClearCoverageService : IClearCoverageService
 
         return JsonSerializer.Deserialize<JsonElement>(
             await response.Content.ReadAsStreamAsync().ConfigureAwait(false),
-            APIDentalPro::ModelBase.SerializerOptions
+            ModelBase.SerializerOptions
         );
     }
 }

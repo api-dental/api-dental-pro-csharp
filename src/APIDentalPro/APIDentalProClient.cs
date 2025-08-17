@@ -1,13 +1,14 @@
 using System;
-using ClearCoverage = APIDentalPro.Services.ClearCoverage;
-using Eligibility = APIDentalPro.Services.Eligibility;
-using Http = System.Net.Http;
+using System.Net.Http;
+using APIDentalPro.Services.ClearCoverage;
+using APIDentalPro.Services.Eligibility;
+using APIDentalPro.Services.Payer;
 
 namespace APIDentalPro;
 
 public sealed class APIDentalProClient : IAPIDentalProClient
 {
-    public Http::HttpClient HttpClient { get; init; } = new();
+    public HttpClient HttpClient { get; init; } = new();
 
     Lazy<Uri> _baseUrl = new(() =>
         new Uri(
@@ -31,28 +32,28 @@ public sealed class APIDentalProClient : IAPIDentalProClient
         init { _apiKey = new(() => value); }
     }
 
-    readonly Lazy<Eligibility::IEligibilityService> _eligibility;
-    public Eligibility::IEligibilityService Eligibility
+    readonly Lazy<IEligibilityService> _eligibility;
+    public IEligibilityService Eligibility
     {
         get { return _eligibility.Value; }
     }
 
-    readonly Lazy<ClearCoverage::IClearCoverageService> _clearCoverage;
-    public ClearCoverage::IClearCoverageService ClearCoverage
+    readonly Lazy<IClearCoverageService> _clearCoverage;
+    public IClearCoverageService ClearCoverage
     {
         get { return _clearCoverage.Value; }
     }
 
-    readonly Lazy<global::APIDentalPro.Services.Payer.IPayerService> _payer;
-    public global::APIDentalPro.Services.Payer.IPayerService Payer
+    readonly Lazy<IPayerService> _payer;
+    public IPayerService Payer
     {
         get { return _payer.Value; }
     }
 
     public APIDentalProClient()
     {
-        _eligibility = new(() => new Eligibility::EligibilityService(this));
-        _clearCoverage = new(() => new ClearCoverage::ClearCoverageService(this));
-        _payer = new(() => new global::APIDentalPro.Services.Payer.PayerService(this));
+        _eligibility = new(() => new EligibilityService(this));
+        _clearCoverage = new(() => new ClearCoverageService(this));
+        _payer = new(() => new PayerService(this));
     }
 }

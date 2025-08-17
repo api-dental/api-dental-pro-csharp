@@ -1,21 +1,22 @@
 using System;
-using ClearCoverage = APIDentalPro.Services.ClearCoverage;
-using Eligibility = APIDentalPro.Services.Eligibility;
-using Http = System.Net.Http;
+using System.Net.Http;
+using APIDentalPro.Services.ClearCoverage;
+using APIDentalPro.Services.Eligibility;
+using APIDentalPro.Services.Payer;
 
 namespace APIDentalPro;
 
 public interface IAPIDentalProClient
 {
-    Http::HttpClient HttpClient { get; init; }
+    HttpClient HttpClient { get; init; }
 
     Uri BaseUrl { get; init; }
 
     string APIKey { get; init; }
 
-    Eligibility::IEligibilityService Eligibility { get; }
+    IEligibilityService Eligibility { get; }
 
-    ClearCoverage::IClearCoverageService ClearCoverage { get; }
+    IClearCoverageService ClearCoverage { get; }
 
-    global::APIDentalPro.Services.Payer.IPayerService Payer { get; }
+    IPayerService Payer { get; }
 }
