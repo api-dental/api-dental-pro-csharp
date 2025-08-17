@@ -3,59 +3,52 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using APIDentalPro = APIDentalPro;
-using EligibilityRequestParamsProperties = APIDentalPro.Models.Eligibility.EligibilityRequestParamsProperties;
+using APIDentalPro.Models.Eligibility.EligibilityRequestParamsProperties;
 
 namespace APIDentalPro.Models.Eligibility;
 
 /// <summary>
 /// Request Eligibility
 /// </summary>
-public sealed record class EligibilityRequestParams : APIDentalPro::ParamsBase
+public sealed record class EligibilityRequestParams : ParamsBase
 {
     public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
-    public required EligibilityRequestParamsProperties::Payer Payer
+    public required PayerModel Payer
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("payer", out JsonElement element))
                 throw new ArgumentOutOfRangeException("payer", "Missing required argument");
 
-            return JsonSerializer.Deserialize<EligibilityRequestParamsProperties::Payer>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("payer");
+            return JsonSerializer.Deserialize<PayerModel>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("payer");
         }
         set { this.BodyProperties["payer"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public required EligibilityRequestParamsProperties::Provider Provider
+    public required Provider Provider
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("provider", out JsonElement element))
                 throw new ArgumentOutOfRangeException("provider", "Missing required argument");
 
-            return JsonSerializer.Deserialize<EligibilityRequestParamsProperties::Provider>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("provider");
+            return JsonSerializer.Deserialize<Provider>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("provider");
         }
         set { this.BodyProperties["provider"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public required EligibilityRequestParamsProperties::Subscriber Subscriber
+    public required Subscriber Subscriber
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("subscriber", out JsonElement element))
                 throw new ArgumentOutOfRangeException("subscriber", "Missing required argument");
 
-            return JsonSerializer.Deserialize<EligibilityRequestParamsProperties::Subscriber>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("subscriber");
+            return JsonSerializer.Deserialize<Subscriber>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("subscriber");
         }
         set { this.BodyProperties["subscriber"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -67,30 +60,25 @@ public sealed record class EligibilityRequestParams : APIDentalPro::ParamsBase
             if (!this.BodyProperties.TryGetValue("version", out JsonElement element))
                 throw new ArgumentOutOfRangeException("version", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("version");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("version");
         }
         set { this.BodyProperties["version"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public EligibilityRequestParamsProperties::Dependent? Dependent
+    public Dependent? Dependent
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("dependent", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<EligibilityRequestParamsProperties::Dependent?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<Dependent?>(element, ModelBase.SerializerOptions);
         }
         set { this.BodyProperties["dependent"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override Uri Url(APIDentalPro::IAPIDentalProClient client)
+    public override Uri Url(IAPIDentalProClient client)
     {
         return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/Eligibility")
         {
@@ -107,15 +95,12 @@ public sealed record class EligibilityRequestParams : APIDentalPro::ParamsBase
         );
     }
 
-    public void AddHeadersToRequest(
-        HttpRequestMessage request,
-        APIDentalPro::IAPIDentalProClient client
-    )
+    public void AddHeadersToRequest(HttpRequestMessage request, IAPIDentalProClient client)
     {
-        APIDentalPro::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            APIDentalPro::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

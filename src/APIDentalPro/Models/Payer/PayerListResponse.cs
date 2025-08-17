@@ -2,14 +2,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using APIDentalPro = APIDentalPro;
 
 namespace APIDentalPro.Models.Payer;
 
-[JsonConverter(typeof(APIDentalPro::ModelConverter<PayerListResponse>))]
-public sealed record class PayerListResponse
-    : APIDentalPro::ModelBase,
-        APIDentalPro::IFromRaw<PayerListResponse>
+[JsonConverter(typeof(ModelConverter<PayerListResponse>))]
+public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResponse>
 {
     public string? ID
     {
@@ -18,10 +15,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("id", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -33,10 +27,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("alt_payer_ids", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<string>?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -48,10 +39,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("features", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<string>?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["features"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -63,10 +51,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("name", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -78,10 +63,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("onederfulPayerId", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -93,10 +75,7 @@ public sealed record class PayerListResponse
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                APIDentalPro::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["status"] = JsonSerializer.SerializeToElement(value); }
     }

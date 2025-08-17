@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using APIDentalPro = APIDentalPro;
 
 namespace APIDentalPro.Models.ClearCoverage.ClearCoverageRequestParamsProperties;
 
-[JsonConverter(typeof(APIDentalPro::ModelConverter<Provider>))]
-public sealed record class Provider : APIDentalPro::ModelBase, APIDentalPro::IFromRaw<Provider>
+[JsonConverter(typeof(ModelConverter<Provider>))]
+public sealed record class Provider : ModelBase, IFromRaw<Provider>
 {
     public required string Npi
     {
@@ -17,10 +16,8 @@ public sealed record class Provider : APIDentalPro::ModelBase, APIDentalPro::IFr
             if (!this.Properties.TryGetValue("npi", out JsonElement element))
                 throw new ArgumentOutOfRangeException("npi", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("npi");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("npi");
         }
         set { this.Properties["npi"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -32,10 +29,8 @@ public sealed record class Provider : APIDentalPro::ModelBase, APIDentalPro::IFr
             if (!this.Properties.TryGetValue("tax_id", out JsonElement element))
                 throw new ArgumentOutOfRangeException("tax_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    APIDentalPro::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("tax_id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("tax_id");
         }
         set { this.Properties["tax_id"] = JsonSerializer.SerializeToElement(value); }
     }
