@@ -1,23 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using APIDentalPro.Models.Payer;
-using APIDentalPro = APIDentalPro;
-using Generic = System.Collections.Generic;
 
 namespace APIDentalPro.Services.Payer;
 
 public sealed class PayerService : IPayerService
 {
-    readonly APIDentalPro::IAPIDentalProClient _client;
+    readonly IAPIDentalProClient _client;
 
-    public PayerService(APIDentalPro::IAPIDentalProClient client)
+    public PayerService(IAPIDentalProClient client)
     {
         _client = client;
     }
 
-    public async Task<Generic::List<PayerListResponse>> List(PayerListParams parameters)
+    public async Task<List<PayerListResponse>> List(PayerListParams parameters)
     {
         using HttpRequestMessage request = new(HttpMethod.Get, parameters.Url(this._client));
         parameters.AddHeadersToRequest(request, this._client);
@@ -26,15 +25,15 @@ public sealed class PayerService : IPayerService
             .ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            throw new APIDentalPro::HttpException(
+            throw new HttpException(
                 response.StatusCode,
                 await response.Content.ReadAsStringAsync().ConfigureAwait(false)
             );
         }
 
-        return JsonSerializer.Deserialize<Generic::List<PayerListResponse>>(
+        return JsonSerializer.Deserialize<List<PayerListResponse>>(
                 await response.Content.ReadAsStreamAsync().ConfigureAwait(false),
-                APIDentalPro::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             ) ?? throw new NullReferenceException();
     }
 }
