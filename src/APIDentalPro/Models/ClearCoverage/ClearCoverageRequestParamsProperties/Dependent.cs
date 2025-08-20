@@ -18,7 +18,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
 
             return JsonSerializer.Deserialize<DateOnly>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["dob"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["dob"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string FirstName
@@ -31,7 +37,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("first_name");
         }
-        set { this.Properties["first_name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["first_name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string GroupNumber
@@ -44,7 +56,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("group_number");
         }
-        set { this.Properties["group_number"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["group_number"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string LastName
@@ -57,7 +75,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("last_name");
         }
-        set { this.Properties["last_name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["last_name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string MemberID
@@ -70,7 +94,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("member_id");
         }
-        set { this.Properties["member_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["member_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

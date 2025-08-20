@@ -24,7 +24,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
             return JsonSerializer.Deserialize<PayerModel>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("payer");
         }
-        set { this.BodyProperties["payer"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["payer"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required Provider Provider
@@ -37,7 +43,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
             return JsonSerializer.Deserialize<Provider>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("provider");
         }
-        set { this.BodyProperties["provider"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["provider"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required Subscriber Subscriber
@@ -50,7 +62,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
             return JsonSerializer.Deserialize<Subscriber>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("subscriber");
         }
-        set { this.BodyProperties["subscriber"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["subscriber"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Version
@@ -63,7 +81,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("version");
         }
-        set { this.BodyProperties["version"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["version"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public Dependent? Dependent
@@ -75,7 +99,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
 
             return JsonSerializer.Deserialize<Dependent?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["dependent"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["dependent"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAPIDentalProClient client)

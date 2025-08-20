@@ -19,7 +19,13 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("npi");
         }
-        set { this.Properties["npi"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["npi"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string TaxID
@@ -32,7 +38,13 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("tax_id");
         }
-        set { this.Properties["tax_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["tax_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
