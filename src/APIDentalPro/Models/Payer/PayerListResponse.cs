@@ -17,7 +17,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public List<string>? AltPayerIDs
@@ -29,7 +35,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public List<string>? Features
@@ -41,7 +53,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["features"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["features"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? Name
@@ -53,7 +71,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? OnederfulPayerID
@@ -65,7 +89,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? Status
@@ -77,7 +107,13 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["status"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["status"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
