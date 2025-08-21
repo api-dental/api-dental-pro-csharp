@@ -14,6 +14,10 @@ public interface IAPIDentalProClient
 
     string APIKey { get; init; }
 
+    string? SDKSource { get; init; }
+
+    string? SDKLang { get; init; }
+
     IEligibilityService Eligibility { get; }
 
     IClearCoverageService ClearCoverage { get; }

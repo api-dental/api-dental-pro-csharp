@@ -32,6 +32,10 @@ public sealed class APIDentalProClient : IAPIDentalProClient
         init { _apiKey = new(() => value); }
     }
 
+    public string? SDKSource { get; init; } = "api-dental-sdk";
+
+    public string? SDKLang { get; init; } = "";
+
     readonly Lazy<IEligibilityService> _eligibility;
     public IEligibilityService Eligibility
     {
