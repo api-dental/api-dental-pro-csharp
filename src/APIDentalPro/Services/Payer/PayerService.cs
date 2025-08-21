@@ -16,8 +16,10 @@ public sealed class PayerService : IPayerService
         _client = client;
     }
 
-    public async Task<List<PayerListResponse>> List(PayerListParams parameters)
+    public async Task<List<PayerListResponse>> List(PayerListParams? parameters = null)
     {
+        parameters ??= new();
+
         using HttpRequestMessage request = new(HttpMethod.Get, parameters.Url(this._client));
         parameters.AddHeadersToRequest(request, this._client);
         using HttpResponseMessage response = await this
