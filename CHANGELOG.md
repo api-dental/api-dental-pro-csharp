@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.2.0 (2025-08-21)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** update via SDK Studio ([2adf875](https://github.com/api-dental/api-dental-pro-csharp/commit/2adf875613f2dd112cf8a2b62e93d4ba49603984))
+* **client:** allow omitting all params object when all optional ([2406da2](https://github.com/api-dental/api-dental-pro-csharp/commit/2406da22fc4f82848bdbe476a7063db620168f0e))
+* **internal:** add dedicated build job in ci ([6576874](https://github.com/api-dental/api-dental-pro-csharp/commit/65768744927350accaacd7e036967a90f42af6ab))
+
+
+### Chores
+
+* **internal:** remove unnecessary internal aliasing ([0ec187c](https://github.com/api-dental/api-dental-pro-csharp/commit/0ec187c382a47a69e0f69e63e9d1bcf7d320a9ee))
+* **internal:** rename parameters ([d16e9fa](https://github.com/api-dental/api-dental-pro-csharp/commit/d16e9fad92f2b614bc998adc9870b18630c66f28))
+
+
+### Documentation
+
+* **client:** add more property comments ([f8cfff2](https://github.com/api-dental/api-dental-pro-csharp/commit/f8cfff2ad7537db35b452e0b314396bbfec811eb))
+
+
+### Refactors
+
+* **client:** refine enum representation ([f8cfff2](https://github.com/api-dental/api-dental-pro-csharp/commit/f8cfff2ad7537db35b452e0b314396bbfec811eb))
+
 ## 0.1.0 (2025-08-14)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.0.1...v0.1.0)
