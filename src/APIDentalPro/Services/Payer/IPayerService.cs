@@ -9,5 +9,5 @@ public interface IPayerService
     /// <summary>
     /// List Payers
     /// </summary>
-    Task<List<PayerListResponse>> List(PayerListParams parameters);
+    Task<List<PayerListResponse>> List(PayerListParams? parameters = null);
 }
