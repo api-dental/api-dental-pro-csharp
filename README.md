@@ -40,19 +40,19 @@ APIDentalProClient client = new();
 
 EligibilityRequestParams parameters = new()
 {
-    Payer = new("94276"),
+    Payer = new("12345"),
     Provider = new()
     {
-        Npi = "1447364856",
-        TaxID = "270872579",
+        Npi = "1234567890",
+        TaxID = "123456789",
     },
     Subscriber = new()
     {
-        FirstName = "Carlene",
-        LastName = "Ross",
-        MemberID = "118882775601",
-        GroupNumber = "20010-10003",
-        Dob = DateOnly.Parse("1953-02-13"),
+        Dob = DateOnly.Parse("2019-12-27"),
+        FirstName = "Jane",
+        GroupNumber = "22000-00000",
+        LastName = "Doe",
+        MemberID = "118885555000",
     },
     Version = "v2",
 };
