@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2025-08-23)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** update via SDK Studio ([1fc5178](https://github.com/api-dental/api-dental-pro-csharp/commit/1fc5178d604ba0e453390aec2ca2b8c38773796d))
+
 ## 0.2.0 (2025-08-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.1.0...v0.2.0)
