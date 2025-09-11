@@ -149,6 +149,9 @@ public abstract record class ParamsBase
 
     protected static void AddDefaultHeaders(HttpRequestMessage request, IAPIDentalProClient client)
     {
-        request.Headers.Add("X-Token-API", client.APIKey);
+        if (client.APIKey != null)
+        {
+            request.Headers.Add("X-Token-API", client.APIKey);
+        }
     }
 }
