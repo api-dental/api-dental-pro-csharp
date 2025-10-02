@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using APIDentalPro.Core;
+using APIDentalPro.Exceptions;
 using APIDentalPro.Models.ClearCoverage.ClearCoverageRequestParamsProperties;
 
 namespace APIDentalPro.Models.ClearCoverage;
@@ -19,10 +21,16 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("payer", out JsonElement element))
-                throw new ArgumentOutOfRangeException("payer", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'payer' cannot be null",
+                    new ArgumentOutOfRangeException("payer", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<PayerModel>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("payer");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'payer' cannot be null",
+                    new ArgumentNullException("payer")
+                );
         }
         set
         {
@@ -38,10 +46,16 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("provider", out JsonElement element))
-                throw new ArgumentOutOfRangeException("provider", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'provider' cannot be null",
+                    new ArgumentOutOfRangeException("provider", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<Provider>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("provider");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'provider' cannot be null",
+                    new ArgumentNullException("provider")
+                );
         }
         set
         {
@@ -57,10 +71,16 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("subscriber", out JsonElement element))
-                throw new ArgumentOutOfRangeException("subscriber", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'subscriber' cannot be null",
+                    new ArgumentOutOfRangeException("subscriber", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<Subscriber>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("subscriber");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'subscriber' cannot be null",
+                    new ArgumentNullException("subscriber")
+                );
         }
         set
         {
@@ -76,10 +96,16 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("version", out JsonElement element))
-                throw new ArgumentOutOfRangeException("version", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'version' cannot be null",
+                    new ArgumentOutOfRangeException("version", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("version");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'version' cannot be null",
+                    new ArgumentNullException("version")
+                );
         }
         set
         {
@@ -116,7 +142,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }.Uri;
     }
 
-    public StringContent BodyContent()
+    internal override StringContent? BodyContent()
     {
         return new(
             JsonSerializer.Serialize(this.BodyProperties),
@@ -125,7 +151,10 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         );
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, IAPIDentalProClient client)
+    internal override void AddHeadersToRequest(
+        HttpRequestMessage request,
+        IAPIDentalProClient client
+    )
     {
         ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)

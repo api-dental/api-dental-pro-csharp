@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using APIDentalPro.Core;
+using APIDentalPro.Exceptions;
 
 namespace APIDentalPro.Models.ClearCoverage.ClearCoverageRequestParamsProperties;
 
@@ -14,7 +16,10 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         get
         {
             if (!this.Properties.TryGetValue("dob", out JsonElement element))
-                throw new ArgumentOutOfRangeException("dob", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'dob' cannot be null",
+                    new ArgumentOutOfRangeException("dob", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<DateOnly>(element, ModelBase.SerializerOptions);
         }
@@ -32,10 +37,16 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         get
         {
             if (!this.Properties.TryGetValue("first_name", out JsonElement element))
-                throw new ArgumentOutOfRangeException("first_name", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'first_name' cannot be null",
+                    new ArgumentOutOfRangeException("first_name", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("first_name");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'first_name' cannot be null",
+                    new ArgumentNullException("first_name")
+                );
         }
         set
         {
@@ -51,10 +62,16 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         get
         {
             if (!this.Properties.TryGetValue("group_number", out JsonElement element))
-                throw new ArgumentOutOfRangeException("group_number", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'group_number' cannot be null",
+                    new ArgumentOutOfRangeException("group_number", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("group_number");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'group_number' cannot be null",
+                    new ArgumentNullException("group_number")
+                );
         }
         set
         {
@@ -70,10 +87,16 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         get
         {
             if (!this.Properties.TryGetValue("last_name", out JsonElement element))
-                throw new ArgumentOutOfRangeException("last_name", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'last_name' cannot be null",
+                    new ArgumentOutOfRangeException("last_name", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("last_name");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'last_name' cannot be null",
+                    new ArgumentNullException("last_name")
+                );
         }
         set
         {
@@ -89,10 +112,16 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         get
         {
             if (!this.Properties.TryGetValue("member_id", out JsonElement element))
-                throw new ArgumentOutOfRangeException("member_id", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'member_id' cannot be null",
+                    new ArgumentOutOfRangeException("member_id", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("member_id");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'member_id' cannot be null",
+                    new ArgumentNullException("member_id")
+                );
         }
         set
         {

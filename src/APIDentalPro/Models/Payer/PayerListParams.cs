@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using APIDentalPro.Core;
 
 namespace APIDentalPro.Models.Payer;
 
@@ -16,7 +17,10 @@ public sealed record class PayerListParams : ParamsBase
         }.Uri;
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, IAPIDentalProClient client)
+    internal override void AddHeadersToRequest(
+        HttpRequestMessage request,
+        IAPIDentalProClient client
+    )
     {
         ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
