@@ -96,6 +96,33 @@ To send a request to the API Dental Pro API, build an instance of some `Params` 
 
 For example, `client.Eligibility.Request` should be called with an instance of `EligibilityRequestParams`, and it will return an instance of `Task<JsonElement>`.
 
+## Error handling
+
+The SDK throws custom unchecked exception types:
+
+- `APIDentalProApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
+
+| Status | Exception                                   |
+| ------ | ------------------------------------------- |
+| 400    | `APIDentalProBadRequestException`           |
+| 401    | `APIDentalProUnauthorizedException`         |
+| 403    | `APIDentalProForbiddenException`            |
+| 404    | `APIDentalProNotFoundException`             |
+| 422    | `APIDentalProUnprocessableEntityException`  |
+| 429    | `APIDentalProRateLimitException`            |
+| 5xx    | `APIDentalPro5xxException`                  |
+| others | `APIDentalProUnexpectedStatusCodeException` |
+
+Additionally, all 4xx errors inherit from `APIDentalPro4xxException`.
+
+false
+
+- `APIDentalProIOException`: I/O networking errors.
+
+- `APIDentalProInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
+
+- `APIDentalProException`: Base class for all exceptions.
+
 ## Semantic versioning
 
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:

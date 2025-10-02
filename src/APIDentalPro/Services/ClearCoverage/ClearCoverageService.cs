@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using APIDentalPro.Core;
 using APIDentalPro.Models.ClearCoverage;
 
 namespace APIDentalPro.Services.ClearCoverage;
@@ -16,25 +17,12 @@ public sealed class ClearCoverageService : IClearCoverageService
 
     public async Task<JsonElement> Request(ClearCoverageRequestParams parameters)
     {
-        using HttpRequestMessage request = new(HttpMethod.Post, parameters.Url(this._client))
+        HttpRequest<ClearCoverageRequestParams> request = new()
         {
-            Content = parameters.BodyContent(),
+            Method = HttpMethod.Post,
+            Params = parameters,
         };
-        parameters.AddHeadersToRequest(request, this._client);
-        using HttpResponseMessage response = await this
-            ._client.HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-            .ConfigureAwait(false);
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new HttpException(
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync().ConfigureAwait(false)
-            );
-        }
-
-        return JsonSerializer.Deserialize<JsonElement>(
-            await response.Content.ReadAsStreamAsync().ConfigureAwait(false),
-            ModelBase.SerializerOptions
-        );
+        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        return await response.Deserialize<JsonElement>().ConfigureAwait(false);
     }
 }

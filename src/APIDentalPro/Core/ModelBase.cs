@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace APIDentalPro;
+namespace APIDentalPro.Core;
 
 public abstract record class ModelBase
 {

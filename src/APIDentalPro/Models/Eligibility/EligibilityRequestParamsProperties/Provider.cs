@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using APIDentalPro.Core;
+using APIDentalPro.Exceptions;
 
 namespace APIDentalPro.Models.Eligibility.EligibilityRequestParamsProperties;
 
@@ -14,10 +16,16 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
         get
         {
             if (!this.Properties.TryGetValue("npi", out JsonElement element))
-                throw new ArgumentOutOfRangeException("npi", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'npi' cannot be null",
+                    new ArgumentOutOfRangeException("npi", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("npi");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'npi' cannot be null",
+                    new ArgumentNullException("npi")
+                );
         }
         set
         {
@@ -33,10 +41,16 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
         get
         {
             if (!this.Properties.TryGetValue("tax_id", out JsonElement element))
-                throw new ArgumentOutOfRangeException("tax_id", "Missing required argument");
+                throw new APIDentalProInvalidDataException(
+                    "'tax_id' cannot be null",
+                    new ArgumentOutOfRangeException("tax_id", "Missing required argument")
+                );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("tax_id");
+                ?? throw new APIDentalProInvalidDataException(
+                    "'tax_id' cannot be null",
+                    new ArgumentNullException("tax_id")
+                );
         }
         set
         {

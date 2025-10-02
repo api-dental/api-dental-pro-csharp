@@ -1,5 +1,8 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
+using APIDentalPro.Core;
+using APIDentalPro.Exceptions;
 using APIDentalPro.Services.ClearCoverage;
 using APIDentalPro.Services.Eligibility;
 using APIDentalPro.Services.Payer;
@@ -24,7 +27,10 @@ public sealed class APIDentalProClient : IAPIDentalProClient
 
     Lazy<string> _apiKey = new(() =>
         Environment.GetEnvironmentVariable("API_DENTAL_API_KEY")
-        ?? throw new ArgumentNullException(nameof(APIKey))
+        ?? throw new APIDentalProInvalidDataException(
+            string.Format("{0} cannot be null", nameof(APIKey)),
+            new ArgumentNullException(nameof(APIKey))
+        )
     );
     public string APIKey
     {
@@ -52,6 +58,46 @@ public sealed class APIDentalProClient : IAPIDentalProClient
     public IPayerService Payer
     {
         get { return _payer.Value; }
+    }
+
+    public async Task<HttpResponse> Execute<T>(HttpRequest<T> request)
+        where T : ParamsBase
+    {
+        using HttpRequestMessage requestMessage = new(request.Method, request.Params.Url(this))
+        {
+            Content = request.Params.BodyContent(),
+        };
+        request.Params.AddHeadersToRequest(requestMessage, this);
+        HttpResponseMessage responseMessage;
+        try
+        {
+            responseMessage = await this
+                .HttpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead)
+                .ConfigureAwait(false);
+        }
+        catch (HttpRequestException e1)
+        {
+            throw new APIDentalProIOException("I/O exception", e1);
+        }
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            try
+            {
+                throw APIDentalProExceptionFactory.CreateApiException(
+                    responseMessage.StatusCode,
+                    await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false)
+                );
+            }
+            catch (HttpRequestException e)
+            {
+                throw new APIDentalProIOException("I/O Exception", e);
+            }
+            finally
+            {
+                responseMessage.Dispose();
+            }
+        }
+        return new() { Message = responseMessage };
     }
 
     public APIDentalProClient()
