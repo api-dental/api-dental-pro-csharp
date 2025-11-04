@@ -8,7 +8,7 @@ public class ClearCoverageServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Request_Works()
     {
-        var response = await this.client.ClearCoverage.Request(
+        await this.client.ClearCoverage.Request(
             new()
             {
                 Payer = new("id"),
@@ -24,6 +24,5 @@ public class ClearCoverageServiceTest : TestBase
                 Version = "version",
             }
         );
-        _ = response;
     }
 }
