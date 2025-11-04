@@ -8,7 +8,7 @@ public class EligibilityServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Request_Works()
     {
-        var response = await this.client.Eligibility.Request(
+        await this.client.Eligibility.Request(
             new()
             {
                 Payer = new("id"),
@@ -24,6 +24,5 @@ public class EligibilityServiceTest : TestBase
                 Version = "version",
             }
         );
-        _ = response;
     }
 }

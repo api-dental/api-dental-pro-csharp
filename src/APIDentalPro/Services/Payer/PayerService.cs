@@ -25,6 +25,14 @@ public sealed class PayerService : IPayerService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<List<PayerListResponse>>().ConfigureAwait(false);
+        var payers = await response.Deserialize<List<PayerListResponse>>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            foreach (var item in payers)
+            {
+                item.Validate();
+            }
+        }
+        return payers;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Exceptions;
@@ -11,36 +12,49 @@ namespace APIDentalPro;
 
 public sealed class APIDentalProClient : IAPIDentalProClient
 {
-    public HttpClient HttpClient { get; init; } = new();
+    readonly ClientOptions _options = new();
 
-    Lazy<Uri> _baseUrl = new(() =>
-        new Uri(
-            Environment.GetEnvironmentVariable("API_DENTAL_PRO_BASE_URL")
-                ?? "https://wg.api.dental/rest"
-        )
-    );
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
     public Uri BaseUrl
     {
-        get { return _baseUrl.Value; }
-        init { _baseUrl = new(() => value); }
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
     }
 
-    Lazy<string> _apiKey = new(() =>
-        Environment.GetEnvironmentVariable("API_DENTAL_API_KEY")
-        ?? throw new APIDentalProInvalidDataException(
-            string.Format("{0} cannot be null", nameof(APIKey)),
-            new ArgumentNullException(nameof(APIKey))
-        )
-    );
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    public TimeSpan Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
     public string APIKey
     {
-        get { return _apiKey.Value; }
-        init { _apiKey = new(() => value); }
+        get { return this._options.APIKey; }
+        init { this._options.APIKey = value; }
     }
 
-    public string? SDKSource { get; init; } = "api-dental-sdk";
+    public string? SDKSource
+    {
+        get { return this._options.SDKSource; }
+        init { this._options.SDKSource = value; }
+    }
 
-    public string? SDKLang { get; init; } = "";
+    public string? SDKLang
+    {
+        get { return this._options.SDKLang; }
+        init { this._options.SDKLang = value; }
+    }
 
     readonly Lazy<IEligibilityService> _eligibility;
     public IEligibilityService Eligibility
@@ -68,11 +82,16 @@ public sealed class APIDentalProClient : IAPIDentalProClient
             Content = request.Params.BodyContent(),
         };
         request.Params.AddHeadersToRequest(requestMessage, this);
+        using CancellationTokenSource cts = new(this.Timeout);
         HttpResponseMessage responseMessage;
         try
         {
             responseMessage = await this
-                .HttpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead)
+                .HttpClient.SendAsync(
+                    requestMessage,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cts.Token
+                )
                 .ConfigureAwait(false);
         }
         catch (HttpRequestException e1)

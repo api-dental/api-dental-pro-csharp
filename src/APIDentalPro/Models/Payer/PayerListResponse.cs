@@ -120,14 +120,8 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     public override void Validate()
     {
         _ = this.ID;
-        foreach (var item in this.AltPayerIDs ?? [])
-        {
-            _ = item;
-        }
-        foreach (var item in this.Features ?? [])
-        {
-            _ = item;
-        }
+        _ = this.AltPayerIDs;
+        _ = this.Features;
         _ = this.Name;
         _ = this.OnederfulPayerID;
         _ = this.Status;
