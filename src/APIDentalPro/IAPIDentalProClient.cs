@@ -24,6 +24,8 @@ public interface IAPIDentalProClient
 
     string? SDKLang { get; init; }
 
+    IAPIDentalProClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     IEligibilityService Eligibility { get; }
 
     IClearCoverageService ClearCoverage { get; }
