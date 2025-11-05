@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,6 +9,11 @@ namespace APIDentalPro.Services.Payer;
 
 public sealed class PayerService : IPayerService
 {
+    public IPayerService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new PayerService(this._client.WithOptions(modifier));
+    }
+
     readonly IAPIDentalProClient _client;
 
     public PayerService(IAPIDentalProClient client)

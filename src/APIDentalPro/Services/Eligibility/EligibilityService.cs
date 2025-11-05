@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -8,6 +9,11 @@ namespace APIDentalPro.Services.Eligibility;
 
 public sealed class EligibilityService : IEligibilityService
 {
+    public IEligibilityService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new EligibilityService(this._client.WithOptions(modifier));
+    }
+
     readonly IAPIDentalProClient _client;
 
     public EligibilityService(IAPIDentalProClient client)

@@ -35,7 +35,6 @@ using System;
 using APIDentalPro;
 using APIDentalPro.Models.Eligibility;
 
-// Configured using the API_DENTAL_API_KEY and API_DENTAL_PRO_BASE_URL environment variables
 APIDentalProClient client = new();
 
 EligibilityRequestParams parameters = new()
@@ -62,7 +61,7 @@ var response = await client.Eligibility.Request(parameters);
 Console.WriteLine(response);
 ```
 
-## Client Configuration
+## Client configuration
 
 Configure the client using environment variables:
 
@@ -89,6 +88,30 @@ See this table for the available options:
 | --------- | ------------------------- | -------- | ------------------------------ |
 | `APIKey`  | `API_DENTAL_API_KEY`      | true     | -                              |
 | `BaseUrl` | `API_DENTAL_PRO_BASE_URL` | true     | `"https://wg.api.dental/rest"` |
+
+### Modifying configuration
+
+To temporarily use a modified client configuration, while reusing the same connection and thread pools, call `WithOptions` on any client or service:
+
+```csharp
+using System;
+
+var response = await client
+    .WithOptions(options =>
+        options with
+        {
+            BaseUrl = new("https://example.com"),
+            Timeout = TimeSpan.FromSeconds(42),
+        }
+    )
+    .Eligibility.Request(parameters);
+
+Console.WriteLine(response);
+```
+
+Using a [`with` expression](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/with-expression) makes it easy to construct the modified options.
+
+The `WithOptions` method does not affect the original client or service.
 
 ## Requests and responses
 
@@ -122,6 +145,38 @@ false
 - `APIDentalProInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - `APIDentalProException`: Base class for all exceptions.
+
+## Network options
+
+### Timeouts
+
+Requests time out after 1 minute by default.
+
+To set a custom timeout, configure the client using the `Timeout` option:
+
+```csharp
+using System;
+using APIDentalPro;
+
+APIDentalProClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
+```
+
+Or configure a single method call using [`WithOptions`](#modifying-configuration):
+
+```csharp
+using System;
+
+var response = await client
+    .WithOptions(options =>
+        options with
+        {
+            Timeout = TimeSpan.FromSeconds(42)
+        }
+    )
+    .Eligibility.Request(parameters);
+
+Console.WriteLine(response);
+```
 
 ## Semantic versioning
 

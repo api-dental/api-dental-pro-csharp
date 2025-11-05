@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -8,6 +9,11 @@ namespace APIDentalPro.Services.ClearCoverage;
 
 public sealed class ClearCoverageService : IClearCoverageService
 {
+    public IClearCoverageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ClearCoverageService(this._client.WithOptions(modifier));
+    }
+
     readonly IAPIDentalProClient _client;
 
     public ClearCoverageService(IAPIDentalProClient client)

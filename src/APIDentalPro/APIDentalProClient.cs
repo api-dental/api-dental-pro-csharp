@@ -12,7 +12,7 @@ namespace APIDentalPro;
 
 public sealed class APIDentalProClient : IAPIDentalProClient
 {
-    readonly ClientOptions _options = new();
+    readonly ClientOptions _options;
 
     public HttpClient HttpClient
     {
@@ -54,6 +54,11 @@ public sealed class APIDentalProClient : IAPIDentalProClient
     {
         get { return this._options.SDKLang; }
         init { this._options.SDKLang = value; }
+    }
+
+    public IAPIDentalProClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new APIDentalProClient(modifier(this._options));
     }
 
     readonly Lazy<IEligibilityService> _eligibility;
@@ -121,8 +126,16 @@ public sealed class APIDentalProClient : IAPIDentalProClient
 
     public APIDentalProClient()
     {
+        _options = new();
+
         _eligibility = new(() => new EligibilityService(this));
         _clearCoverage = new(() => new ClearCoverageService(this));
         _payer = new(() => new PayerService(this));
+    }
+
+    public APIDentalProClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
     }
 }
