@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("id", out JsonElement element))
+            if (!this._properties.TryGetValue("id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["id"] = JsonSerializer.SerializeToElement(
+            this._properties["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,14 +32,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("alt_payer_ids", out JsonElement element))
+            if (!this._properties.TryGetValue("alt_payer_ids", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
+            this._properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,14 +50,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("features", out JsonElement element))
+            if (!this._properties.TryGetValue("features", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["features"] = JsonSerializer.SerializeToElement(
+            this._properties["features"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -67,14 +68,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("name", out JsonElement element))
+            if (!this._properties.TryGetValue("name", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["name"] = JsonSerializer.SerializeToElement(
+            this._properties["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -85,14 +86,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("onederfulPayerId", out JsonElement element))
+            if (!this._properties.TryGetValue("onederfulPayerId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
+            this._properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -103,14 +104,14 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -129,16 +130,23 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
     public PayerListResponse() { }
 
+    public PayerListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PayerListResponse(Dictionary<string, JsonElement> properties)
+    PayerListResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static PayerListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static PayerListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
