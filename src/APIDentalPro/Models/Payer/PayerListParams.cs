@@ -47,20 +47,17 @@ public sealed record class PayerListParams : ParamsBase
         );
     }
 
-    public override Uri Url(IAPIDentalProClient client)
+    public override Uri Url(ClientOptions options)
     {
-        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/Payer")
+        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/Payer")
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
-    internal override void AddHeadersToRequest(
-        HttpRequestMessage request,
-        IAPIDentalProClient client
-    )
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);

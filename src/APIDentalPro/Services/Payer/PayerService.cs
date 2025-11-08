@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Payer;
@@ -21,7 +22,10 @@ public sealed class PayerService : IPayerService
         _client = client;
     }
 
-    public async Task<List<PayerListResponse>> List(PayerListParams? parameters = null)
+    public async Task<List<PayerListResponse>> List(
+        PayerListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
     {
         parameters ??= new();
 
@@ -30,8 +34,12 @@ public sealed class PayerService : IPayerService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var payers = await response.Deserialize<List<PayerListResponse>>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var payers = await response
+            .Deserialize<List<PayerListResponse>>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             foreach (var item in payers)

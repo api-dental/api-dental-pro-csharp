@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.ClearCoverage;
@@ -13,5 +14,8 @@ public interface IClearCoverageService
     /// <summary>
     /// Clear Coverage
     /// </summary>
-    Task<JsonElement> Request(ClearCoverageRequestParams parameters);
+    Task<JsonElement> Request(
+        ClearCoverageRequestParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }
