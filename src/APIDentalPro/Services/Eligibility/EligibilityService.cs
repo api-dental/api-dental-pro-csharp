@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Eligibility;
@@ -21,14 +22,19 @@ public sealed class EligibilityService : IEligibilityService
         _client = client;
     }
 
-    public async Task<JsonElement> Request(EligibilityRequestParams parameters)
+    public async Task<JsonElement> Request(
+        EligibilityRequestParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<EligibilityRequestParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
     }
 }

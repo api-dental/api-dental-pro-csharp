@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Services.ClearCoverage;
@@ -15,6 +16,8 @@ public interface IAPIDentalProClient
     Uri BaseUrl { get; init; }
 
     bool ResponseValidation { get; init; }
+
+    int MaxRetries { get; init; }
 
     TimeSpan Timeout { get; init; }
 
@@ -32,6 +35,9 @@ public interface IAPIDentalProClient
 
     IPayerService Payer { get; }
 
-    Task<HttpResponse> Execute<T>(HttpRequest<T> request)
+    Task<HttpResponse> Execute<T>(
+        HttpRequest<T> request,
+        CancellationToken cancellationToken = default
+    )
         where T : ParamsBase;
 }

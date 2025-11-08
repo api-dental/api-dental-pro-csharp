@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Eligibility;
@@ -13,5 +14,8 @@ public interface IEligibilityService
     /// <summary>
     /// Request Eligibility
     /// </summary>
-    Task<JsonElement> Request(EligibilityRequestParams parameters);
+    Task<JsonElement> Request(
+        EligibilityRequestParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

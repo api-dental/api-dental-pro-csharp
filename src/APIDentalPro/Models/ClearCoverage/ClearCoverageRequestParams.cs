@@ -133,6 +133,11 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._bodyProperties["dependent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -180,11 +185,11 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         );
     }
 
-    public override Uri Url(IAPIDentalProClient client)
+    public override Uri Url(ClientOptions options)
     {
-        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/ClearCoverage")
+        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/ClearCoverage")
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
@@ -197,12 +202,9 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         );
     }
 
-    internal override void AddHeadersToRequest(
-        HttpRequestMessage request,
-        IAPIDentalProClient client
-    )
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);

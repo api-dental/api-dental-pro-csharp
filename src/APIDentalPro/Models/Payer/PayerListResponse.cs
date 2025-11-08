@@ -21,6 +21,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -39,6 +44,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -57,6 +67,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["features"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -75,6 +90,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -93,6 +113,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -111,6 +136,11 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Payer;
@@ -13,5 +14,8 @@ public interface IPayerService
     /// <summary>
     /// List Payers
     /// </summary>
-    Task<List<PayerListResponse>> List(PayerListParams? parameters = null);
+    Task<List<PayerListResponse>> List(
+        PayerListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }
