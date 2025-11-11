@@ -1,14 +1,14 @@
 using System;
 using System.Threading.Tasks;
 
-namespace APIDentalPro.Tests.Services.Eligibility;
+namespace APIDentalPro.Tests.Services;
 
-public class EligibilityServiceTest : TestBase
+public class ClearCoverageServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Request_Works()
     {
-        await this.client.Eligibility.Request(
+        await this.client.ClearCoverage.Request(
             new()
             {
                 Payer = new("id"),

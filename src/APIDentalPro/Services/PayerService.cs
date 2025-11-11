@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Payer;
 
-namespace APIDentalPro.Services.Payer;
+namespace APIDentalPro.Services;
 
 public sealed class PayerService : IPayerService
 {

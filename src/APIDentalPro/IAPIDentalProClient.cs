@@ -3,9 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
-using APIDentalPro.Services.ClearCoverage;
-using APIDentalPro.Services.Eligibility;
-using APIDentalPro.Services.Payer;
+using APIDentalPro.Services;
 
 namespace APIDentalPro;
 

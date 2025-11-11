@@ -4,30 +4,30 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using APIDentalPro.Core;
-using APIDentalPro.Models.Eligibility;
+using APIDentalPro.Models.ClearCoverage;
 
-namespace APIDentalPro.Services.Eligibility;
+namespace APIDentalPro.Services;
 
-public sealed class EligibilityService : IEligibilityService
+public sealed class ClearCoverageService : IClearCoverageService
 {
-    public IEligibilityService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public IClearCoverageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new EligibilityService(this._client.WithOptions(modifier));
+        return new ClearCoverageService(this._client.WithOptions(modifier));
     }
 
     readonly IAPIDentalProClient _client;
 
-    public EligibilityService(IAPIDentalProClient client)
+    public ClearCoverageService(IAPIDentalProClient client)
     {
         _client = client;
     }
 
     public async Task<JsonElement> Request(
-        EligibilityRequestParams parameters,
+        ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<EligibilityRequestParams> request = new()
+        HttpRequest<ClearCoverageRequestParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.Eligibility;
 
-namespace APIDentalPro.Services.Eligibility;
+namespace APIDentalPro.Services;
 
 public interface IEligibilityService
 {
