@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace APIDentalPro.Tests.Services.Payer;
+namespace APIDentalPro.Tests.Services;
 
 public class PayerServiceTest : TestBase
 {

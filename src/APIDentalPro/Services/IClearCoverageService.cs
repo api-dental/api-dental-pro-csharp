@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using APIDentalPro.Core;
 using APIDentalPro.Models.ClearCoverage;
 
-namespace APIDentalPro.Services.ClearCoverage;
+namespace APIDentalPro.Services;
 
 public interface IClearCoverageService
 {
