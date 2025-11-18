@@ -54,6 +54,14 @@ EligibilityRequestParams parameters = new()
         MemberID = "118885555000",
     },
     Version = "v2",
+    Dependent = new()
+    {
+        Dob = DateOnly.Parse("2019-12-27"),
+        FirstName = "John",
+        GroupNumber = "20000-10001",
+        LastName = "Doe",
+        MemberID = "118885555001",
+    },
 };
 
 var response = await client.Eligibility.Request(parameters);
