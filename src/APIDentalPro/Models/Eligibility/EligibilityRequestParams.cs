@@ -208,8 +208,8 @@ public sealed record class EligibilityRequestParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<PayerModel>))]
-public sealed record class PayerModel : ModelBase, IFromRaw<PayerModel>
+[JsonConverter(typeof(ModelConverter<PayerModel, PayerModelFromRaw>))]
+public sealed record class PayerModel : ModelBase
 {
     public required string ID
     {
@@ -269,8 +269,14 @@ public sealed record class PayerModel : ModelBase, IFromRaw<PayerModel>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Provider>))]
-public sealed record class Provider : ModelBase, IFromRaw<Provider>
+class PayerModelFromRaw : IFromRaw<PayerModel>
+{
+    public PayerModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        PayerModel.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Provider, ProviderFromRaw>))]
+public sealed record class Provider : ModelBase
 {
     public required string Npi
     {
@@ -349,10 +355,22 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Subscriber>))]
-public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
+class ProviderFromRaw : IFromRaw<Provider>
 {
-    public required DateOnly Dob
+    public Provider FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Provider.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Subscriber, SubscriberFromRaw>))]
+public sealed record class Subscriber : ModelBase
+{
+    public required
+#if NET
+    DateOnly
+#else
+    DateTimeOffset
+#endif
+    Dob
     {
         get
         {
@@ -362,7 +380,13 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
                     new ArgumentOutOfRangeException("dob", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<DateOnly>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<
+#if NET
+            DateOnly
+#else
+            DateTimeOffset
+#endif
+            >(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -503,10 +527,22 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Dependent>))]
-public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
+class SubscriberFromRaw : IFromRaw<Subscriber>
 {
-    public required DateOnly Dob
+    public Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Subscriber.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Dependent, DependentFromRaw>))]
+public sealed record class Dependent : ModelBase
+{
+    public required
+#if NET
+    DateOnly
+#else
+    DateTimeOffset
+#endif
+    Dob
     {
         get
         {
@@ -516,7 +552,13 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
                     new ArgumentOutOfRangeException("dob", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<DateOnly>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<
+#if NET
+            DateOnly
+#else
+            DateTimeOffset
+#endif
+            >(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -655,4 +697,10 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class DependentFromRaw : IFromRaw<Dependent>
+{
+    public Dependent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Dependent.FromRawUnchecked(rawData);
 }

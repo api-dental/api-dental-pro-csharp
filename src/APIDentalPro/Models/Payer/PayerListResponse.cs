@@ -7,8 +7,8 @@ using APIDentalPro.Core;
 
 namespace APIDentalPro.Models.Payer;
 
-[JsonConverter(typeof(ModelConverter<PayerListResponse>))]
-public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResponse>
+[JsonConverter(typeof(ModelConverter<PayerListResponse, PayerListResponseFromRaw>))]
+public sealed record class PayerListResponse : ModelBase
 {
     public string? ID
     {
@@ -179,4 +179,10 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class PayerListResponseFromRaw : IFromRaw<PayerListResponse>
+{
+    public PayerListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        PayerListResponse.FromRawUnchecked(rawData);
 }

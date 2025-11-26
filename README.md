@@ -21,10 +21,7 @@ dotnet add package APIDentalPro
 
 ## Requirements
 
-This library requires .NET 8 or later.
-
-> [!NOTE]
-> The library is currently in **beta**. The requirements will be lowered in the future.
+This library requires .NET Standard 2.0 or later.
 
 ## Usage
 
@@ -47,7 +44,13 @@ EligibilityRequestParams parameters = new()
     },
     Subscriber = new()
     {
-        Dob = DateOnly.Parse("2019-12-27"),
+        Dob =
+        #if NET
+        DateOnly
+        #else
+        DateTimeOffset
+        #endif
+        .Parse("2019-12-27"),
         FirstName = "Jane",
         GroupNumber = "22000-00000",
         LastName = "Doe",
@@ -56,7 +59,13 @@ EligibilityRequestParams parameters = new()
     Version = "v2",
     Dependent = new()
     {
-        Dob = DateOnly.Parse("2019-12-27"),
+        Dob =
+        #if NET
+        DateOnly
+        #else
+        DateTimeOffset
+        #endif
+        .Parse("2019-12-27"),
         FirstName = "John",
         GroupNumber = "20000-10001",
         LastName = "Doe",
