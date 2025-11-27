@@ -8,8 +8,10 @@ using APIDentalPro.Models.Eligibility;
 
 namespace APIDentalPro.Services;
 
+/// <inheritdoc />
 public sealed class EligibilityService : IEligibilityService
 {
+    /// <inheritdoc/>
     public IEligibilityService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new EligibilityService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class EligibilityService : IEligibilityService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<JsonElement> Request(
         EligibilityRequestParams parameters,
         CancellationToken cancellationToken = default

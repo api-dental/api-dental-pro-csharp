@@ -33,7 +33,7 @@ public sealed record class PayerListResponse : ModelBase
         }
     }
 
-    public List<string>? AltPayerIDs
+    public IReadOnlyList<string>? AltPayerIDs
     {
         get
         {
@@ -56,7 +56,7 @@ public sealed record class PayerListResponse : ModelBase
         }
     }
 
-    public List<string>? Features
+    public IReadOnlyList<string>? Features
     {
         get
         {

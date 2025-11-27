@@ -8,8 +8,10 @@ using APIDentalPro.Models.ClearCoverage;
 
 namespace APIDentalPro.Services;
 
+/// <inheritdoc />
 public sealed class ClearCoverageService : IClearCoverageService
 {
+    /// <inheritdoc/>
     public IClearCoverageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ClearCoverageService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class ClearCoverageService : IClearCoverageService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<JsonElement> Request(
         ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
