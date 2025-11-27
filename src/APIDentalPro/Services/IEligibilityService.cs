@@ -14,6 +14,11 @@ namespace APIDentalPro.Services;
 /// </summary>
 public interface IEligibilityService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IEligibilityService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>

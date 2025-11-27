@@ -11,6 +11,7 @@ using APIDentalPro.Services;
 
 namespace APIDentalPro;
 
+/// <inheritdoc/>
 public sealed class APIDentalProClient : IAPIDentalProClient
 {
     static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
@@ -22,54 +23,63 @@ public sealed class APIDentalProClient : IAPIDentalProClient
 
     readonly ClientOptions _options;
 
+    /// <inheritdoc/>
     public HttpClient HttpClient
     {
         get { return this._options.HttpClient; }
         init { this._options.HttpClient = value; }
     }
 
+    /// <inheritdoc/>
     public Uri BaseUrl
     {
         get { return this._options.BaseUrl; }
         init { this._options.BaseUrl = value; }
     }
 
+    /// <inheritdoc/>
     public bool ResponseValidation
     {
         get { return this._options.ResponseValidation; }
         init { this._options.ResponseValidation = value; }
     }
 
+    /// <inheritdoc/>
     public int? MaxRetries
     {
         get { return this._options.MaxRetries; }
         init { this._options.MaxRetries = value; }
     }
 
+    /// <inheritdoc/>
     public TimeSpan? Timeout
     {
         get { return this._options.Timeout; }
         init { this._options.Timeout = value; }
     }
 
+    /// <inheritdoc/>
     public string APIKey
     {
         get { return this._options.APIKey; }
         init { this._options.APIKey = value; }
     }
 
+    /// <inheritdoc/>
     public string? SDKSource
     {
         get { return this._options.SDKSource; }
         init { this._options.SDKSource = value; }
     }
 
+    /// <inheritdoc/>
     public string? SDKLang
     {
         get { return this._options.SDKLang; }
         init { this._options.SDKLang = value; }
     }
 
+    /// <inheritdoc/>
     public IAPIDentalProClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new APIDentalProClient(modifier(this._options));
@@ -93,6 +103,7 @@ public sealed class APIDentalProClient : IAPIDentalProClient
         get { return _payer.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<HttpResponse> Execute<T>(
         HttpRequest<T> request,
         CancellationToken cancellationToken = default

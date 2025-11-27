@@ -8,8 +8,10 @@ using APIDentalPro.Models.Payer;
 
 namespace APIDentalPro.Services;
 
+/// <inheritdoc />
 public sealed class PayerService : IPayerService
 {
+    /// <inheritdoc/>
     public IPayerService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new PayerService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class PayerService : IPayerService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<PayerListResponse>> List(
         PayerListParams? parameters = null,
         CancellationToken cancellationToken = default

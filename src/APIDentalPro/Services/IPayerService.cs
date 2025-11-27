@@ -14,6 +14,11 @@ namespace APIDentalPro.Services;
 /// </summary>
 public interface IPayerService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IPayerService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
