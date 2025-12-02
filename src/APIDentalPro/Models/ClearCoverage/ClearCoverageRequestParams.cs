@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using APIDentalPro.Core;
-using APIDentalPro.Exceptions;
 
 namespace APIDentalPro.Models.ClearCoverage;
 
@@ -24,113 +23,31 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
 
     public required PayerModel Payer
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("payer", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'payer' cannot be null",
-                    new ArgumentOutOfRangeException("payer", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<PayerModel>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'payer' cannot be null",
-                    new ArgumentNullException("payer")
-                );
-        }
-        init
-        {
-            this._rawBodyData["payer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<PayerModel>(this.RawBodyData, "payer"); }
+        init { ModelBase.Set(this._rawBodyData, "payer", value); }
     }
 
     public required Provider Provider
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("provider", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'provider' cannot be null",
-                    new ArgumentOutOfRangeException("provider", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Provider>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'provider' cannot be null",
-                    new ArgumentNullException("provider")
-                );
-        }
-        init
-        {
-            this._rawBodyData["provider"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Provider>(this.RawBodyData, "provider"); }
+        init { ModelBase.Set(this._rawBodyData, "provider", value); }
     }
 
     public required Subscriber Subscriber
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("subscriber", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'subscriber' cannot be null",
-                    new ArgumentOutOfRangeException("subscriber", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Subscriber>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'subscriber' cannot be null",
-                    new ArgumentNullException("subscriber")
-                );
-        }
-        init
-        {
-            this._rawBodyData["subscriber"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Subscriber>(this.RawBodyData, "subscriber"); }
+        init { ModelBase.Set(this._rawBodyData, "subscriber", value); }
     }
 
     public required string Version
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("version", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'version' cannot be null",
-                    new ArgumentOutOfRangeException("version", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'version' cannot be null",
-                    new ArgumentNullException("version")
-                );
-        }
-        init
-        {
-            this._rawBodyData["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "version"); }
+        init { ModelBase.Set(this._rawBodyData, "version", value); }
     }
 
     public Dependent? Dependent
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("dependent", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dependent?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Dependent>(this.RawBodyData, "dependent"); }
         init
         {
             if (value == null)
@@ -138,10 +55,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["dependent"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "dependent", value);
         }
     }
 
@@ -213,27 +127,8 @@ public sealed record class PayerModel : ModelBase
 {
     public required string ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public override void Validate()
@@ -280,52 +175,14 @@ public sealed record class Provider : ModelBase
 {
     public required string Npi
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("npi", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'npi' cannot be null",
-                    new ArgumentOutOfRangeException("npi", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'npi' cannot be null",
-                    new ArgumentNullException("npi")
-                );
-        }
-        init
-        {
-            this._rawData["npi"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "npi"); }
+        init { ModelBase.Set(this._rawData, "npi", value); }
     }
 
     public required string TaxID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tax_id", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'tax_id' cannot be null",
-                    new ArgumentOutOfRangeException("tax_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'tax_id' cannot be null",
-                    new ArgumentNullException("tax_id")
-                );
-        }
-        init
-        {
-            this._rawData["tax_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "tax_id"); }
+        init { ModelBase.Set(this._rawData, "tax_id", value); }
     }
 
     public override void Validate()
@@ -372,129 +229,38 @@ public sealed record class Subscriber : ModelBase
 #endif
     Dob
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("dob", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'dob' cannot be null",
-                    new ArgumentOutOfRangeException("dob", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
+        get { return ModelBase.GetNotNullStruct<
 #if NET
             DateOnly
 #else
             DateTimeOffset
 #endif
-            >(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["dob"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+            >(this.RawData, "dob"); }
+        init { ModelBase.Set(this._rawData, "dob", value); }
     }
 
     public required string FirstName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("first_name", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'first_name' cannot be null",
-                    new ArgumentOutOfRangeException("first_name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'first_name' cannot be null",
-                    new ArgumentNullException("first_name")
-                );
-        }
-        init
-        {
-            this._rawData["first_name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "first_name"); }
+        init { ModelBase.Set(this._rawData, "first_name", value); }
     }
 
     public required string GroupNumber
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("group_number", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'group_number' cannot be null",
-                    new ArgumentOutOfRangeException("group_number", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'group_number' cannot be null",
-                    new ArgumentNullException("group_number")
-                );
-        }
-        init
-        {
-            this._rawData["group_number"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "group_number"); }
+        init { ModelBase.Set(this._rawData, "group_number", value); }
     }
 
     public required string LastName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("last_name", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'last_name' cannot be null",
-                    new ArgumentOutOfRangeException("last_name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'last_name' cannot be null",
-                    new ArgumentNullException("last_name")
-                );
-        }
-        init
-        {
-            this._rawData["last_name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "last_name"); }
+        init { ModelBase.Set(this._rawData, "last_name", value); }
     }
 
     public required string MemberID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("member_id", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'member_id' cannot be null",
-                    new ArgumentOutOfRangeException("member_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'member_id' cannot be null",
-                    new ArgumentNullException("member_id")
-                );
-        }
-        init
-        {
-            this._rawData["member_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "member_id"); }
+        init { ModelBase.Set(this._rawData, "member_id", value); }
     }
 
     public override void Validate()
@@ -544,129 +310,38 @@ public sealed record class Dependent : ModelBase
 #endif
     Dob
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("dob", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'dob' cannot be null",
-                    new ArgumentOutOfRangeException("dob", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
+        get { return ModelBase.GetNotNullStruct<
 #if NET
             DateOnly
 #else
             DateTimeOffset
 #endif
-            >(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["dob"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+            >(this.RawData, "dob"); }
+        init { ModelBase.Set(this._rawData, "dob", value); }
     }
 
     public required string FirstName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("first_name", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'first_name' cannot be null",
-                    new ArgumentOutOfRangeException("first_name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'first_name' cannot be null",
-                    new ArgumentNullException("first_name")
-                );
-        }
-        init
-        {
-            this._rawData["first_name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "first_name"); }
+        init { ModelBase.Set(this._rawData, "first_name", value); }
     }
 
     public required string GroupNumber
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("group_number", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'group_number' cannot be null",
-                    new ArgumentOutOfRangeException("group_number", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'group_number' cannot be null",
-                    new ArgumentNullException("group_number")
-                );
-        }
-        init
-        {
-            this._rawData["group_number"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "group_number"); }
+        init { ModelBase.Set(this._rawData, "group_number", value); }
     }
 
     public required string LastName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("last_name", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'last_name' cannot be null",
-                    new ArgumentOutOfRangeException("last_name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'last_name' cannot be null",
-                    new ArgumentNullException("last_name")
-                );
-        }
-        init
-        {
-            this._rawData["last_name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "last_name"); }
+        init { ModelBase.Set(this._rawData, "last_name", value); }
     }
 
     public required string MemberID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("member_id", out JsonElement element))
-                throw new APIDentalProInvalidDataException(
-                    "'member_id' cannot be null",
-                    new ArgumentOutOfRangeException("member_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new APIDentalProInvalidDataException(
-                    "'member_id' cannot be null",
-                    new ArgumentNullException("member_id")
-                );
-        }
-        init
-        {
-            this._rawData["member_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "member_id"); }
+        init { ModelBase.Set(this._rawData, "member_id", value); }
     }
 
     public override void Validate()
