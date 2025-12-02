@@ -12,13 +12,7 @@ public sealed record class PayerListResponse : ModelBase
 {
     public string? ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "id"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "id", value);
         }
     }
 
     public IReadOnlyList<string>? AltPayerIDs
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("alt_payer_ids", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "alt_payer_ids"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["alt_payer_ids"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "alt_payer_ids", value);
         }
     }
 
     public IReadOnlyList<string>? Features
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("features", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "features"); }
         init
         {
             if (value == null)
@@ -72,22 +48,13 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["features"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "features", value);
         }
     }
 
     public string? Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -95,22 +62,13 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "name", value);
         }
     }
 
     public string? OnederfulPayerID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("onederfulPayerId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "onederfulPayerId"); }
         init
         {
             if (value == null)
@@ -118,22 +76,13 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["onederfulPayerId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "onederfulPayerId", value);
         }
     }
 
     public string? Status
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "status"); }
         init
         {
             if (value == null)
@@ -141,10 +90,7 @@ public sealed record class PayerListResponse : ModelBase
                 return;
             }
 
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "status", value);
         }
     }
 
