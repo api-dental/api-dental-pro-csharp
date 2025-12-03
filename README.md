@@ -15,6 +15,8 @@ The REST API documentation can be found on [api.dental](https://api.dental/docs)
 
 ## Installation
 
+Install the package from [NuGet](https://www.nuget.org/packages/APIDentalPro):
+
 ```bash
 dotnet add package APIDentalPro
 ```
