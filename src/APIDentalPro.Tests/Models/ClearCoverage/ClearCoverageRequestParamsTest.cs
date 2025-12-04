@@ -4,12 +4,12 @@ using APIDentalPro.Models.ClearCoverage;
 
 namespace APIDentalPro.Tests.Models.ClearCoverage;
 
-public class PayerModelTest : TestBase
+public class ClearCoverageRequestParamsPayerTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
 
         string expectedID = "id";
 
@@ -19,10 +19,10 @@ public class PayerModelTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PayerModel>(json);
+        var deserialized = JsonSerializer.Deserialize<ClearCoverageRequestParamsPayer>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -30,10 +30,10 @@ public class PayerModelTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PayerModel>(json);
+        var deserialized = JsonSerializer.Deserialize<ClearCoverageRequestParamsPayer>(json);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -44,7 +44,7 @@ public class PayerModelTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
 
         model.Validate();
     }

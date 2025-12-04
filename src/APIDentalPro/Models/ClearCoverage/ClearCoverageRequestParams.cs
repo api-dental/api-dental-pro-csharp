@@ -21,9 +21,15 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public required PayerModel Payer
+    public required ClearCoverageRequestParamsPayer Payer
     {
-        get { return ModelBase.GetNotNullClass<PayerModel>(this.RawBodyData, "payer"); }
+        get
+        {
+            return ModelBase.GetNotNullClass<ClearCoverageRequestParamsPayer>(
+                this.RawBodyData,
+                "payer"
+            );
+        }
         init { ModelBase.Set(this._rawBodyData, "payer", value); }
     }
 
@@ -61,6 +67,12 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
 
     public ClearCoverageRequestParams() { }
 
+    public ClearCoverageRequestParams(ClearCoverageRequestParams clearCoverageRequestParams)
+        : base(clearCoverageRequestParams)
+    {
+        this._rawBodyData = [.. clearCoverageRequestParams._rawBodyData];
+    }
+
     public ClearCoverageRequestParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -86,6 +98,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ClearCoverageRequestParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -122,8 +135,10 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<PayerModel, PayerModelFromRaw>))]
-public sealed record class PayerModel : ModelBase
+[JsonConverter(
+    typeof(ModelConverter<ClearCoverageRequestParamsPayer, ClearCoverageRequestParamsPayerFromRaw>)
+)]
+public sealed record class ClearCoverageRequestParamsPayer : ModelBase
 {
     public required string ID
     {
@@ -131,43 +146,54 @@ public sealed record class PayerModel : ModelBase
         init { ModelBase.Set(this._rawData, "id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
     }
 
-    public PayerModel() { }
+    public ClearCoverageRequestParamsPayer() { }
 
-    public PayerModel(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ClearCoverageRequestParamsPayer(
+        ClearCoverageRequestParamsPayer clearCoverageRequestParamsPayer
+    )
+        : base(clearCoverageRequestParamsPayer) { }
+
+    public ClearCoverageRequestParamsPayer(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PayerModel(FrozenDictionary<string, JsonElement> rawData)
+    ClearCoverageRequestParamsPayer(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static PayerModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="ClearCoverageRequestParamsPayerFromRaw.FromRawUnchecked"/>
+    public static ClearCoverageRequestParamsPayer FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public PayerModel(string id)
+    public ClearCoverageRequestParamsPayer(string id)
         : this()
     {
         this.ID = id;
     }
 }
 
-class PayerModelFromRaw : IFromRaw<PayerModel>
+class ClearCoverageRequestParamsPayerFromRaw : IFromRaw<ClearCoverageRequestParamsPayer>
 {
-    public PayerModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        PayerModel.FromRawUnchecked(rawData);
+    /// <inheritdoc/>
+    public ClearCoverageRequestParamsPayer FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ClearCoverageRequestParamsPayer.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ModelConverter<Provider, ProviderFromRaw>))]
@@ -185,6 +211,7 @@ public sealed record class Provider : ModelBase
         init { ModelBase.Set(this._rawData, "tax_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Npi;
@@ -192,6 +219,9 @@ public sealed record class Provider : ModelBase
     }
 
     public Provider() { }
+
+    public Provider(Provider provider)
+        : base(provider) { }
 
     public Provider(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -206,6 +236,7 @@ public sealed record class Provider : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ProviderFromRaw.FromRawUnchecked"/>
     public static Provider FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -214,6 +245,7 @@ public sealed record class Provider : ModelBase
 
 class ProviderFromRaw : IFromRaw<Provider>
 {
+    /// <inheritdoc/>
     public Provider FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Provider.FromRawUnchecked(rawData);
 }
@@ -263,6 +295,7 @@ public sealed record class Subscriber : ModelBase
         init { ModelBase.Set(this._rawData, "member_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Dob;
@@ -273,6 +306,9 @@ public sealed record class Subscriber : ModelBase
     }
 
     public Subscriber() { }
+
+    public Subscriber(Subscriber subscriber)
+        : base(subscriber) { }
 
     public Subscriber(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -287,6 +323,7 @@ public sealed record class Subscriber : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SubscriberFromRaw.FromRawUnchecked"/>
     public static Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -295,6 +332,7 @@ public sealed record class Subscriber : ModelBase
 
 class SubscriberFromRaw : IFromRaw<Subscriber>
 {
+    /// <inheritdoc/>
     public Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Subscriber.FromRawUnchecked(rawData);
 }
@@ -344,6 +382,7 @@ public sealed record class Dependent : ModelBase
         init { ModelBase.Set(this._rawData, "member_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Dob;
@@ -354,6 +393,9 @@ public sealed record class Dependent : ModelBase
     }
 
     public Dependent() { }
+
+    public Dependent(Dependent dependent)
+        : base(dependent) { }
 
     public Dependent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -368,6 +410,7 @@ public sealed record class Dependent : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="DependentFromRaw.FromRawUnchecked"/>
     public static Dependent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -376,6 +419,7 @@ public sealed record class Dependent : ModelBase
 
 class DependentFromRaw : IFromRaw<Dependent>
 {
+    /// <inheritdoc/>
     public Dependent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Dependent.FromRawUnchecked(rawData);
 }

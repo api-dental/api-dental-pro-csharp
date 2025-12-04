@@ -8,7 +8,7 @@ using APIDentalPro.Models.Eligibility;
 
 namespace APIDentalPro.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class EligibilityService : IEligibilityService
 {
     /// <inheritdoc/>

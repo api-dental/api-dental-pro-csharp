@@ -4,12 +4,12 @@ using APIDentalPro.Models.Eligibility;
 
 namespace APIDentalPro.Tests.Models.Eligibility;
 
-public class PayerModelTest : TestBase
+public class EligibilityRequestParamsPayerTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new EligibilityRequestParamsPayer { ID = "id" };
 
         string expectedID = "id";
 
@@ -19,10 +19,10 @@ public class PayerModelTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new EligibilityRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PayerModel>(json);
+        var deserialized = JsonSerializer.Deserialize<EligibilityRequestParamsPayer>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -30,10 +30,10 @@ public class PayerModelTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new EligibilityRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PayerModel>(json);
+        var deserialized = JsonSerializer.Deserialize<EligibilityRequestParamsPayer>(json);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -44,7 +44,7 @@ public class PayerModelTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new PayerModel { ID = "id" };
+        var model = new EligibilityRequestParamsPayer { ID = "id" };
 
         model.Validate();
     }

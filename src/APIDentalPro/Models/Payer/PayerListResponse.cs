@@ -94,6 +94,7 @@ public sealed record class PayerListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -105,6 +106,9 @@ public sealed record class PayerListResponse : ModelBase
     }
 
     public PayerListResponse() { }
+
+    public PayerListResponse(PayerListResponse payerListResponse)
+        : base(payerListResponse) { }
 
     public PayerListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -119,6 +123,7 @@ public sealed record class PayerListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PayerListResponseFromRaw.FromRawUnchecked"/>
     public static PayerListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -129,6 +134,7 @@ public sealed record class PayerListResponse : ModelBase
 
 class PayerListResponseFromRaw : IFromRaw<PayerListResponse>
 {
+    /// <inheritdoc/>
     public PayerListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         PayerListResponse.FromRawUnchecked(rawData);
 }

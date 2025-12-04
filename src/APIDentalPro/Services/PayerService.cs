@@ -8,7 +8,7 @@ using APIDentalPro.Models.Payer;
 
 namespace APIDentalPro.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class PayerService : IPayerService
 {
     /// <inheritdoc/>
