@@ -8,7 +8,7 @@ using APIDentalPro.Models.ClearCoverage;
 
 namespace APIDentalPro.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ClearCoverageService : IClearCoverageService
 {
     /// <inheritdoc/>
