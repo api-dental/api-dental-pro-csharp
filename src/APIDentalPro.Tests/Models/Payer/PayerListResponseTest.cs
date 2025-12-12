@@ -27,11 +27,13 @@ public class PayerListResponseTest : TestBase
         string expectedStatus = "status";
 
         Assert.Equal(expectedID, model.ID);
+        Assert.NotNull(model.AltPayerIDs);
         Assert.Equal(expectedAltPayerIDs.Count, model.AltPayerIDs.Count);
         for (int i = 0; i < expectedAltPayerIDs.Count; i++)
         {
             Assert.Equal(expectedAltPayerIDs[i], model.AltPayerIDs[i]);
         }
+        Assert.NotNull(model.Features);
         Assert.Equal(expectedFeatures.Count, model.Features.Count);
         for (int i = 0; i < expectedFeatures.Count; i++)
         {
@@ -86,11 +88,13 @@ public class PayerListResponseTest : TestBase
         string expectedStatus = "status";
 
         Assert.Equal(expectedID, deserialized.ID);
+        Assert.NotNull(deserialized.AltPayerIDs);
         Assert.Equal(expectedAltPayerIDs.Count, deserialized.AltPayerIDs.Count);
         for (int i = 0; i < expectedAltPayerIDs.Count; i++)
         {
             Assert.Equal(expectedAltPayerIDs[i], deserialized.AltPayerIDs[i]);
         }
+        Assert.NotNull(deserialized.Features);
         Assert.Equal(expectedFeatures.Count, deserialized.Features.Count);
         for (int i = 0; i < expectedFeatures.Count; i++)
         {
