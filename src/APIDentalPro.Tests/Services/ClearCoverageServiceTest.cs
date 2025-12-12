@@ -28,7 +28,8 @@ public class ClearCoverageServiceTest : TestBase
                     MemberID = "member_id",
                 },
                 Version = "version",
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 }

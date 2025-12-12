@@ -24,19 +24,16 @@ public struct ClientOptions()
     /// </summary>
     public HttpClient HttpClient { get; set; } = new();
 
-    Lazy<Uri> _baseUrl = new(() =>
-        new Uri(
-            Environment.GetEnvironmentVariable("API_DENTAL_PRO_BASE_URL")
-                ?? "https://wg.api.dental/rest"
-        )
+    Lazy<string> _baseUrl = new(() =>
+        Environment.GetEnvironmentVariable("API_DENTAL_PRO_BASE_URL") ?? EnvironmentUrl.Production
     );
 
     /// <summary>
     /// The base URL to use for every request.
     ///
-    /// <para>Defaults to the production environment: https://wg.api.dental/rest</para>
+    /// <para>Defaults to the production environment: <see cref="EnvironmentUrl.Production"/></para>
     /// </summary>
-    public Uri BaseUrl
+    public string BaseUrl
     {
         readonly get { return _baseUrl.Value; }
         set { _baseUrl = new(() => value); }
