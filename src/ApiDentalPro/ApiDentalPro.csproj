@@ -3,7 +3,7 @@
     <!-- Metadata -->
     <AssemblyTitle>API Dental Pro C#</AssemblyTitle>
     <AssemblyName>ApiDentalPro</AssemblyName>
-    <VersionPrefix>0.4.1</VersionPrefix>
+    <VersionPrefix>0.5.0</VersionPrefix>
     <Description>The official .NET library for the API Dental Pro API.</Description>
     <OutputType>Library</OutputType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
