@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.5.0 (2026-03-15)
+
+Full Changelog: [v0.4.1...v0.5.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.4.1...v0.5.0)
+
+### Features
+
+* **api:** manual updates ([db509cc](https://github.com/api-dental/api-dental-pro-csharp/commit/db509cca30650755e13714070088ddb17312779a))
+
+
+### Chores
+
+* **internal:** codegen related update ([6758dce](https://github.com/api-dental/api-dental-pro-csharp/commit/6758dce8b941bdf4c02648fad7c36d704adff03f))
+* **internal:** codegen related update ([59bebc4](https://github.com/api-dental/api-dental-pro-csharp/commit/59bebc422406beca55efab52bcfefdac159802d0))
+* **internal:** codegen related update ([0e6f90b](https://github.com/api-dental/api-dental-pro-csharp/commit/0e6f90b122e97506042151d9f6eec6d29b0a9cde))
+* **internal:** codegen related update ([555561e](https://github.com/api-dental/api-dental-pro-csharp/commit/555561e9ba874854be18ae1684fdb42d8703c222))
+* **internal:** codegen related update ([b69c708](https://github.com/api-dental/api-dental-pro-csharp/commit/b69c708f55f832a65136c9162564763f4f370dd2))
+* **internal:** codegen related update ([9249ee2](https://github.com/api-dental/api-dental-pro-csharp/commit/9249ee27edeb0b35a053681fb33e7ea5231a7abd))
+* **internal:** codegen related update ([e130fe3](https://github.com/api-dental/api-dental-pro-csharp/commit/e130fe305fc79db05f36fedf2f27d241f85cf752))
+
 ## 0.4.1 (2026-03-15)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.4.0...v0.4.1)
