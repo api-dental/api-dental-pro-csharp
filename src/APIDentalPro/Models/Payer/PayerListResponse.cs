@@ -1,7 +1,9 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using APIDentalPro.Core;
 
 namespace APIDentalPro.Models.Payer;
 
@@ -12,14 +14,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["id"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -30,14 +37,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("alt_payer_ids", out JsonElement element))
+            if (!this._rawData.TryGetValue("alt_payer_ids", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["alt_payer_ids"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -48,14 +60,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("features", out JsonElement element))
+            if (!this._rawData.TryGetValue("features", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["features"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["features"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -66,14 +83,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["name"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -84,14 +106,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("onederfulPayerId", out JsonElement element))
+            if (!this._rawData.TryGetValue("onederfulPayerId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["onederfulPayerId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -102,14 +129,19 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -119,14 +151,8 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     public override void Validate()
     {
         _ = this.ID;
-        foreach (var item in this.AltPayerIDs ?? [])
-        {
-            _ = item;
-        }
-        foreach (var item in this.Features ?? [])
-        {
-            _ = item;
-        }
+        _ = this.AltPayerIDs;
+        _ = this.Features;
         _ = this.Name;
         _ = this.OnederfulPayerID;
         _ = this.Status;
@@ -134,16 +160,23 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
     public PayerListResponse() { }
 
+    public PayerListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PayerListResponse(Dictionary<string, JsonElement> properties)
+    PayerListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        Properties = properties;
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static PayerListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static PayerListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

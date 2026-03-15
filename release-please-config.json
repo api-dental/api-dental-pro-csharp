@@ -61,11 +61,11 @@
   ],
   "release-type": "simple",
   "extra-files": [
-    "README.md",
     {
       "type": "xml",
-      "path": "src/APIDentalPro/APIDentalPro.csproj",
-      "xpath": "//Project/PropertyGroup/VersionPrefix"
+      "path": "**/*.csproj",
+      "xpath": "//Project/PropertyGroup/VersionPrefix",
+      "glob": true
     }
   ]
 }

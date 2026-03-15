@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.4.0 (2026-03-15)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **client:** refactor exceptions ([d7d41f6](https://github.com/api-dental/api-dental-pro-csharp/commit/d7d41f624f5834ab71f64bf9c2f49a7444662765))
+* **client:** refactor unions ([a4d372d](https://github.com/api-dental/api-dental-pro-csharp/commit/a4d372d7792d834afec7c84cff09580b25e48122))
+* **internal:** add dev container ([aee1c79](https://github.com/api-dental/api-dental-pro-csharp/commit/aee1c79bbb1c4bb7fe12018ce5e370eb969fab69))
+
+
+### Bug Fixes
+
+* **client:** handle multiple auth options gracefully ([1b7254b](https://github.com/api-dental/api-dental-pro-csharp/commit/1b7254b78f9891472ecce3338824fd39ec843a0a))
+* **internal:** remove example csproj ([e854165](https://github.com/api-dental/api-dental-pro-csharp/commit/e854165526145319b50dadbcff7a5eb7a3383a22))
+* **internal:** remove unused null class ([46aae03](https://github.com/api-dental/api-dental-pro-csharp/commit/46aae036cbd475a1870768506e239b60218497b5))
+
+
+### Chores
+
+* **internal:** codegen related update ([b328490](https://github.com/api-dental/api-dental-pro-csharp/commit/b328490f53aa5df01bdd2100f39bffd685352fa6))
+* **internal:** codegen related update ([51668ad](https://github.com/api-dental/api-dental-pro-csharp/commit/51668ad613b1cfcbcb9841015a9e4aa393450442))
+* **internal:** codegen related update ([d803746](https://github.com/api-dental/api-dental-pro-csharp/commit/d80374647c249170d246d10e3f9a7ec7e7bfc6d7))
+* **internal:** codegen related update ([b7bbbb8](https://github.com/api-dental/api-dental-pro-csharp/commit/b7bbbb8aa8da10338eb82fc40ff7c6ebaf2a192e))
+* **internal:** codegen related update ([1b8ee0a](https://github.com/api-dental/api-dental-pro-csharp/commit/1b8ee0ab44ebe0373c1bec97bc2c5181adc10698))
+* **internal:** codegen related update ([fe5018e](https://github.com/api-dental/api-dental-pro-csharp/commit/fe5018e3bb2a93adea055c874f5a2d612b9b7eb4))
+* **internal:** codegen related update ([edca4d7](https://github.com/api-dental/api-dental-pro-csharp/commit/edca4d7d1ba46f52a5e551ee329baf306c723491))
+* **internal:** codegen related update ([41f03bf](https://github.com/api-dental/api-dental-pro-csharp/commit/41f03bfeb9622016481d558d049631b320d18fbe))
+* **internal:** codegen related update ([70dcb2d](https://github.com/api-dental/api-dental-pro-csharp/commit/70dcb2d2539ed04a25a3bd888383cfb388398c9c))
+* **internal:** update release please config ([198d3a8](https://github.com/api-dental/api-dental-pro-csharp/commit/198d3a831899fa3d00aeb94ab7ae1fa11ee4cb30))
+
 ## 0.3.0 (2025-08-23)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.2.0...v0.3.0)
