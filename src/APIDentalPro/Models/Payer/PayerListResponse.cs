@@ -14,7 +14,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -26,7 +26,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -37,7 +37,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("alt_payer_ids", out JsonElement element))
+            if (!this._rawData.TryGetValue("alt_payer_ids", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
@@ -49,7 +49,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["alt_payer_ids"] = JsonSerializer.SerializeToElement(
+            this._rawData["alt_payer_ids"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -60,7 +60,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("features", out JsonElement element))
+            if (!this._rawData.TryGetValue("features", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
@@ -72,7 +72,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["features"] = JsonSerializer.SerializeToElement(
+            this._rawData["features"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -83,7 +83,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -95,7 +95,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["name"] = JsonSerializer.SerializeToElement(
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -106,7 +106,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("onederfulPayerId", out JsonElement element))
+            if (!this._rawData.TryGetValue("onederfulPayerId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -118,7 +118,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["onederfulPayerId"] = JsonSerializer.SerializeToElement(
+            this._rawData["onederfulPayerId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -129,7 +129,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -141,7 +141,7 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
                 return;
             }
 
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -160,23 +160,23 @@ public sealed record class PayerListResponse : ModelBase, IFromRaw<PayerListResp
 
     public PayerListResponse() { }
 
-    public PayerListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public PayerListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PayerListResponse(FrozenDictionary<string, JsonElement> properties)
+    PayerListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PayerListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

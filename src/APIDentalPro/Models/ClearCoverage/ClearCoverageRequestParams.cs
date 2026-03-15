@@ -16,17 +16,17 @@ namespace APIDentalPro.Models.ClearCoverage;
 /// </summary>
 public sealed record class ClearCoverageRequestParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     public required PayerModel Payer
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("payer", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("payer", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'payer' cannot be null",
                     new ArgumentOutOfRangeException("payer", "Missing required argument")
@@ -40,7 +40,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["payer"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["payer"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -51,7 +51,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("provider", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("provider", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'provider' cannot be null",
                     new ArgumentOutOfRangeException("provider", "Missing required argument")
@@ -65,7 +65,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["provider"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -76,7 +76,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("subscriber", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("subscriber", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'subscriber' cannot be null",
                     new ArgumentOutOfRangeException("subscriber", "Missing required argument")
@@ -90,7 +90,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["subscriber"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["subscriber"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -101,7 +101,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("version", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("version", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'version' cannot be null",
                     new ArgumentOutOfRangeException("version", "Missing required argument")
@@ -115,7 +115,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["version"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -126,7 +126,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("dependent", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("dependent", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dependent?>(element, ModelBase.SerializerOptions);
@@ -138,7 +138,7 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
                 return;
             }
 
-            this._bodyProperties["dependent"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["dependent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -148,40 +148,40 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
     public ClearCoverageRequestParams() { }
 
     public ClearCoverageRequestParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ClearCoverageRequestParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static ClearCoverageRequestParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -195,17 +195,13 @@ public sealed record class ClearCoverageRequestParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
@@ -219,7 +215,7 @@ public sealed record class PayerModel : ModelBase, IFromRaw<PayerModel>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -233,7 +229,7 @@ public sealed record class PayerModel : ModelBase, IFromRaw<PayerModel>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -247,22 +243,22 @@ public sealed record class PayerModel : ModelBase, IFromRaw<PayerModel>
 
     public PayerModel() { }
 
-    public PayerModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public PayerModel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PayerModel(FrozenDictionary<string, JsonElement> properties)
+    PayerModel(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static PayerModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static PayerModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -280,7 +276,7 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
     {
         get
         {
-            if (!this._properties.TryGetValue("npi", out JsonElement element))
+            if (!this._rawData.TryGetValue("npi", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'npi' cannot be null",
                     new ArgumentOutOfRangeException("npi", "Missing required argument")
@@ -294,7 +290,7 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
         }
         init
         {
-            this._properties["npi"] = JsonSerializer.SerializeToElement(
+            this._rawData["npi"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -305,7 +301,7 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
     {
         get
         {
-            if (!this._properties.TryGetValue("tax_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("tax_id", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'tax_id' cannot be null",
                     new ArgumentOutOfRangeException("tax_id", "Missing required argument")
@@ -319,7 +315,7 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
         }
         init
         {
-            this._properties["tax_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["tax_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -334,22 +330,22 @@ public sealed record class Provider : ModelBase, IFromRaw<Provider>
 
     public Provider() { }
 
-    public Provider(IReadOnlyDictionary<string, JsonElement> properties)
+    public Provider(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Provider(FrozenDictionary<string, JsonElement> properties)
+    Provider(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Provider FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Provider FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -360,7 +356,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     {
         get
         {
-            if (!this._properties.TryGetValue("dob", out JsonElement element))
+            if (!this._rawData.TryGetValue("dob", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'dob' cannot be null",
                     new ArgumentOutOfRangeException("dob", "Missing required argument")
@@ -370,7 +366,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         }
         init
         {
-            this._properties["dob"] = JsonSerializer.SerializeToElement(
+            this._rawData["dob"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -381,7 +377,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     {
         get
         {
-            if (!this._properties.TryGetValue("first_name", out JsonElement element))
+            if (!this._rawData.TryGetValue("first_name", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'first_name' cannot be null",
                     new ArgumentOutOfRangeException("first_name", "Missing required argument")
@@ -395,7 +391,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         }
         init
         {
-            this._properties["first_name"] = JsonSerializer.SerializeToElement(
+            this._rawData["first_name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -406,7 +402,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     {
         get
         {
-            if (!this._properties.TryGetValue("group_number", out JsonElement element))
+            if (!this._rawData.TryGetValue("group_number", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'group_number' cannot be null",
                     new ArgumentOutOfRangeException("group_number", "Missing required argument")
@@ -420,7 +416,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         }
         init
         {
-            this._properties["group_number"] = JsonSerializer.SerializeToElement(
+            this._rawData["group_number"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -431,7 +427,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     {
         get
         {
-            if (!this._properties.TryGetValue("last_name", out JsonElement element))
+            if (!this._rawData.TryGetValue("last_name", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'last_name' cannot be null",
                     new ArgumentOutOfRangeException("last_name", "Missing required argument")
@@ -445,7 +441,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         }
         init
         {
-            this._properties["last_name"] = JsonSerializer.SerializeToElement(
+            this._rawData["last_name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -456,7 +452,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
     {
         get
         {
-            if (!this._properties.TryGetValue("member_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("member_id", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'member_id' cannot be null",
                     new ArgumentOutOfRangeException("member_id", "Missing required argument")
@@ -470,7 +466,7 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
         }
         init
         {
-            this._properties["member_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["member_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -488,22 +484,22 @@ public sealed record class Subscriber : ModelBase, IFromRaw<Subscriber>
 
     public Subscriber() { }
 
-    public Subscriber(IReadOnlyDictionary<string, JsonElement> properties)
+    public Subscriber(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Subscriber(FrozenDictionary<string, JsonElement> properties)
+    Subscriber(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -514,7 +510,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         get
         {
-            if (!this._properties.TryGetValue("dob", out JsonElement element))
+            if (!this._rawData.TryGetValue("dob", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'dob' cannot be null",
                     new ArgumentOutOfRangeException("dob", "Missing required argument")
@@ -524,7 +520,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
         }
         init
         {
-            this._properties["dob"] = JsonSerializer.SerializeToElement(
+            this._rawData["dob"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -535,7 +531,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         get
         {
-            if (!this._properties.TryGetValue("first_name", out JsonElement element))
+            if (!this._rawData.TryGetValue("first_name", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'first_name' cannot be null",
                     new ArgumentOutOfRangeException("first_name", "Missing required argument")
@@ -549,7 +545,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
         }
         init
         {
-            this._properties["first_name"] = JsonSerializer.SerializeToElement(
+            this._rawData["first_name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -560,7 +556,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         get
         {
-            if (!this._properties.TryGetValue("group_number", out JsonElement element))
+            if (!this._rawData.TryGetValue("group_number", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'group_number' cannot be null",
                     new ArgumentOutOfRangeException("group_number", "Missing required argument")
@@ -574,7 +570,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
         }
         init
         {
-            this._properties["group_number"] = JsonSerializer.SerializeToElement(
+            this._rawData["group_number"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -585,7 +581,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         get
         {
-            if (!this._properties.TryGetValue("last_name", out JsonElement element))
+            if (!this._rawData.TryGetValue("last_name", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'last_name' cannot be null",
                     new ArgumentOutOfRangeException("last_name", "Missing required argument")
@@ -599,7 +595,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
         }
         init
         {
-            this._properties["last_name"] = JsonSerializer.SerializeToElement(
+            this._rawData["last_name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -610,7 +606,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
     {
         get
         {
-            if (!this._properties.TryGetValue("member_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("member_id", out JsonElement element))
                 throw new APIDentalProInvalidDataException(
                     "'member_id' cannot be null",
                     new ArgumentOutOfRangeException("member_id", "Missing required argument")
@@ -624,7 +620,7 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
         }
         init
         {
-            this._properties["member_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["member_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -642,21 +638,21 @@ public sealed record class Dependent : ModelBase, IFromRaw<Dependent>
 
     public Dependent() { }
 
-    public Dependent(IReadOnlyDictionary<string, JsonElement> properties)
+    public Dependent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Dependent(FrozenDictionary<string, JsonElement> properties)
+    Dependent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Dependent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Dependent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
