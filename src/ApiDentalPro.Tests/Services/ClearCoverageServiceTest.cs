@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ApiDentalPro.Models.ClearCoverage;
 
 namespace ApiDentalPro.Tests.Services;
 
@@ -7,7 +8,7 @@ public class ClearCoverageServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Request_Works()
     {
-        await this.client.ClearCoverage.Request(
+        var response = await this.client.ClearCoverage.Request(
             new()
             {
                 Payer = new("52133"),
@@ -20,9 +21,10 @@ public class ClearCoverageServiceTest : TestBase
                     LastName = "Smith",
                     MemberID = "123456789",
                 },
-                Version = "v2",
+                Version = Version.V2,
             },
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 }

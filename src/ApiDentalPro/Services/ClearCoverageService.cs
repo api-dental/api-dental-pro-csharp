@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ApiDentalPro.Core;
@@ -37,7 +36,7 @@ public sealed class ClearCoverageService : IClearCoverageService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Request(
+    public async Task<ClearCoverageRequestResponse> Request(
         ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -68,7 +67,7 @@ public sealed class ClearCoverageServiceWithRawResponse : IClearCoverageServiceW
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<JsonElement>> Request(
+    public async Task<HttpResponse<ClearCoverageRequestResponse>> Request(
         ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -83,7 +82,14 @@ public sealed class ClearCoverageServiceWithRawResponse : IClearCoverageServiceW
             response,
             async (token) =>
             {
-                return await response.Deserialize<JsonElement>(token).ConfigureAwait(false);
+                var deserializedResponse = await response
+                    .Deserialize<ClearCoverageRequestResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
             }
         );
     }

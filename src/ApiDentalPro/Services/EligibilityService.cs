@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ApiDentalPro.Core;
@@ -35,7 +34,7 @@ public sealed class EligibilityService : IEligibilityService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Request(
+    public async Task<EligibilityRequestResponse> Request(
         EligibilityRequestParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -66,7 +65,7 @@ public sealed class EligibilityServiceWithRawResponse : IEligibilityServiceWithR
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<JsonElement>> Request(
+    public async Task<HttpResponse<EligibilityRequestResponse>> Request(
         EligibilityRequestParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -81,7 +80,14 @@ public sealed class EligibilityServiceWithRawResponse : IEligibilityServiceWithR
             response,
             async (token) =>
             {
-                return await response.Deserialize<JsonElement>(token).ConfigureAwait(false);
+                var deserializedResponse = await response
+                    .Deserialize<EligibilityRequestResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
             }
         );
     }

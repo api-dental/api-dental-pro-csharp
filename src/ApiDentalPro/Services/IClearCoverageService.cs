@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ApiDentalPro.Core;
@@ -32,7 +31,7 @@ public interface IClearCoverageService
     /// ClearCoverage. Returns enriched, standardized, and normalized data relevant
     /// for dental use cases with deep benefit insights across supported payers.
     /// </summary>
-    Task<JsonElement> Request(
+    Task<ClearCoverageRequestResponse> Request(
         ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -55,7 +54,7 @@ public interface IClearCoverageServiceWithRawResponse
     /// Returns a raw HTTP response for `post /ClearCoverage`, but is otherwise the
     /// same as <see cref="IClearCoverageService.Request(ClearCoverageRequestParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<JsonElement>> Request(
+    Task<HttpResponse<ClearCoverageRequestResponse>> Request(
         ClearCoverageRequestParams parameters,
         CancellationToken cancellationToken = default
     );

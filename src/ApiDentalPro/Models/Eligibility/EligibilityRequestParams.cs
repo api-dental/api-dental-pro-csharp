@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ApiDentalPro.Core;
+using ApiDentalPro.Exceptions;
 
 namespace ApiDentalPro.Models.Eligibility;
 
@@ -58,14 +59,17 @@ public record class EligibilityRequestParams : ParamsBase
     }
 
     /// <summary>
-    /// API version. Use "v2".
+    /// API version. Use "v2" for the current version. Version "v1" is deprecated
+    /// and returns a legacy response format.
     /// </summary>
-    public required string Version
+    public required ApiEnum<string, global::ApiDentalPro.Models.Eligibility.Version> Version
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("version");
+            return this._rawBodyData.GetNotNullClass<
+                ApiEnum<string, global::ApiDentalPro.Models.Eligibility.Version>
+            >("version");
         }
         init { this._rawBodyData.Set("version", value); }
     }
@@ -454,6 +458,54 @@ class SubscriberFromRaw : IFromRawJson<Subscriber>
     /// <inheritdoc/>
     public Subscriber FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Subscriber.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// API version. Use "v2" for the current version. Version "v1" is deprecated and
+/// returns a legacy response format.
+/// </summary>
+[JsonConverter(typeof(VersionConverter))]
+public enum Version
+{
+    V1,
+    V2,
+}
+
+sealed class VersionConverter : JsonConverter<global::ApiDentalPro.Models.Eligibility.Version>
+{
+    public override global::ApiDentalPro.Models.Eligibility.Version Read(
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "v1" => global::ApiDentalPro.Models.Eligibility.Version.V1,
+            "v2" => global::ApiDentalPro.Models.Eligibility.Version.V2,
+            _ => (global::ApiDentalPro.Models.Eligibility.Version)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::ApiDentalPro.Models.Eligibility.Version value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::ApiDentalPro.Models.Eligibility.Version.V1 => "v1",
+                global::ApiDentalPro.Models.Eligibility.Version.V2 => "v2",
+                _ => throw new ApiDentalProInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>
