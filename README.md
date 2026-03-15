@@ -1,12 +1,5 @@
 # API Dental Pro C# API Library
 
-> [!NOTE]
-> The API Dental Pro C# API Library is currently in **beta** and we're excited for you to experiment with it!
->
-> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/api-dental/api-dental-pro-csharp/issues/new).
-
 The API Dental Pro C# SDK provides convenient access to the [API Dental Pro REST API](https://api.dental/docs) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -15,10 +8,10 @@ The REST API documentation can be found on [api.dental](https://api.dental/docs)
 
 ## Installation
 
-Install the package from [NuGet](https://www.nuget.org/packages/APIDentalPro):
+Install the package from [NuGet](https://www.nuget.org/packages/ApiDentalPro):
 
 ```bash
-dotnet add package APIDentalPro
+dotnet add package ApiDentalPro
 ```
 
 ## Requirements
@@ -31,10 +24,10 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using APIDentalPro;
-using APIDentalPro.Models.Eligibility;
+using ApiDentalPro;
+using ApiDentalPro.Models.Eligibility;
 
-APIDentalProClient client = new();
+ApiDentalProClient client = new();
 
 EligibilityRequestParams parameters = new()
 {
@@ -46,32 +39,20 @@ EligibilityRequestParams parameters = new()
     },
     Subscriber = new()
     {
-        Dob =
-        #if NET
-        DateOnly
-        #else
-        DateTimeOffset
-        #endif
-        .Parse("2019-12-27"),
         FirstName = "Jane",
-        GroupNumber = "22000-00000",
         LastName = "Doe",
         MemberID = "118885555000",
+        GroupNumber = "22000-00000",
+        Dob = "01/15/1990",
     },
     Version = "v2",
     Dependent = new()
     {
-        Dob =
-        #if NET
-        DateOnly
-        #else
-        DateTimeOffset
-        #endif
-        .Parse("2019-12-27"),
         FirstName = "John",
-        GroupNumber = "20000-10001",
         LastName = "Doe",
         MemberID = "118885555001",
+        GroupNumber = "20000-10001",
+        Dob = "03/22/2015",
     },
 };
 
@@ -85,18 +66,18 @@ Console.WriteLine(response);
 Configure the client using environment variables:
 
 ```csharp
-using APIDentalPro;
+using ApiDentalPro;
 
 // Configured using the API_DENTAL_API_KEY and API_DENTAL_PRO_BASE_URL environment variables
-APIDentalProClient client = new();
+ApiDentalProClient client = new();
 ```
 
 Or manually:
 
 ```csharp
-using APIDentalPro;
+using ApiDentalPro;
 
-APIDentalProClient client = new() { APIKey = "My API Key" };
+ApiDentalProClient client = new() { ApiKey = "My API Key" };
 ```
 
 Or using a combination of the two approaches.
@@ -105,7 +86,7 @@ See this table for the available options:
 
 | Property  | Environment variable      | Required | Default value                  |
 | --------- | ------------------------- | -------- | ------------------------------ |
-| `APIKey`  | `API_DENTAL_API_KEY`      | true     | -                              |
+| `ApiKey`  | `API_DENTAL_API_KEY`      | true     | -                              |
 | `BaseUrl` | `API_DENTAL_PRO_BASE_URL` | true     | `"https://wg.api.dental/rest"` |
 
 ### Modifying configuration
@@ -138,32 +119,55 @@ To send a request to the API Dental Pro API, build an instance of some `Params` 
 
 For example, `client.Eligibility.Request` should be called with an instance of `EligibilityRequestParams`, and it will return an instance of `Task<JsonElement>`.
 
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of C# classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `WithRawResponse`:
+
+```csharp
+var response = await client.WithRawResponse.Eligibility.Request(parameters);
+var statusCode = response.StatusCode;
+var headers = response.Headers;
+```
+
+The raw `HttpResponseMessage` can also be accessed through the `RawMessage` property.
+
+For non-streaming responses, you can deserialize the response into an instance of a C# class if needed:
+
+```csharp
+using System;
+using System.Text.Json;
+
+var response = await client.WithRawResponse.Eligibility.Request(parameters);
+JsonElement deserialized = await response.Deserialize();
+Console.WriteLine(deserialized);
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
 
-- `APIDentalProApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
+- `ApiDentalProApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
 
 | Status | Exception                                   |
 | ------ | ------------------------------------------- |
-| 400    | `APIDentalProBadRequestException`           |
-| 401    | `APIDentalProUnauthorizedException`         |
-| 403    | `APIDentalProForbiddenException`            |
-| 404    | `APIDentalProNotFoundException`             |
-| 422    | `APIDentalProUnprocessableEntityException`  |
-| 429    | `APIDentalProRateLimitException`            |
-| 5xx    | `APIDentalPro5xxException`                  |
-| others | `APIDentalProUnexpectedStatusCodeException` |
+| 400    | `ApiDentalProBadRequestException`           |
+| 401    | `ApiDentalProUnauthorizedException`         |
+| 403    | `ApiDentalProForbiddenException`            |
+| 404    | `ApiDentalProNotFoundException`             |
+| 422    | `ApiDentalProUnprocessableEntityException`  |
+| 429    | `ApiDentalProRateLimitException`            |
+| 5xx    | `ApiDentalPro5xxException`                  |
+| others | `ApiDentalProUnexpectedStatusCodeException` |
 
-Additionally, all 4xx errors inherit from `APIDentalPro4xxException`.
+Additionally, all 4xx errors inherit from `ApiDentalPro4xxException`.
 
-false
+- `ApiDentalProIOException`: I/O networking errors.
 
-- `APIDentalProIOException`: I/O networking errors.
+- `ApiDentalProInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
-- `APIDentalProInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
-
-- `APIDentalProException`: Base class for all exceptions.
+- `ApiDentalProException`: Base class for all exceptions.
 
 ## Network options
 
@@ -184,9 +188,9 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using APIDentalPro;
+using ApiDentalPro;
 
-APIDentalProClient client = new() { MaxRetries = 3 };
+ApiDentalProClient client = new() { MaxRetries = 3 };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):
@@ -211,9 +215,9 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using APIDentalPro;
+using ApiDentalPro;
 
-APIDentalProClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
+ApiDentalProClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):
@@ -230,29 +234,162 @@ var response = await client
 Console.WriteLine(response);
 ```
 
+### Proxies
+
+To route requests through a proxy, configure your client with a custom [`HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-10.0):
+
+```csharp
+using System.Net;
+using System.Net.Http;
+using ApiDentalPro;
+
+var httpClient = new HttpClient
+(
+    new HttpClientHandler
+    {
+        Proxy = new WebProxy("https://example.com:8080")
+    }
+);
+
+ApiDentalProClient client = new() { HttpClient = httpClient };
+```
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
+
+### Parameters
+
+To set undocumented parameters, a constructor exists that accepts dictionaries for additional header, query, and body values. If the method type doesn't support request bodies (e.g. `GET` requests), the constructor will only accept a header and query dictionary.
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using ApiDentalPro.Models.Eligibility;
+
+EligibilityRequestParams parameters = new
+(
+    rawHeaderData: new Dictionary<string, JsonElement>()
+    {
+        { "Custom-Header", JsonSerializer.SerializeToElement(42) }
+    },
+
+    rawQueryData: new Dictionary<string, JsonElement>()
+    {
+        { "custom_query_param", JsonSerializer.SerializeToElement(42) }
+    },
+
+    rawBodyData: new Dictionary<string, JsonElement>()
+    {
+        { "custom_body_param", JsonSerializer.SerializeToElement(42) }
+    }
+)
+{
+    // Documented properties can still be added here.
+    // In case of conflict, these parameters take precedence over the custom parameters.
+    Payer = new("52133")
+};
+```
+
+The raw parameters can also be accessed through the `RawHeaderData`, `RawQueryData`, and `RawBodyData` (if available) properties.
+
+This can also be used to set a documented parameter to an undocumented or not yet supported _value_, as long as the parameter is optional. If the parameter is required, omitting its `init` property will result in a compile-time error. To work around this, the `FromRawUnchecked` method can be used:
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using ApiDentalPro.Models.Eligibility;
+
+var parameters = EligibilityRequestParams.FromRawUnchecked
+(
+
+    rawHeaderData: new Dictionary<string, JsonElement>(),
+    rawQueryData: new Dictionary<string, JsonElement>(),
+    rawBodyData: new Dictionary<string, JsonElement>
+    {
+        {
+            "payer",
+            JsonSerializer.SerializeToElement("custom value")
+        }
+    }
+);
+```
+
+### Nested Parameters
+
+Undocumented properties, or undocumented values of documented properties, on nested parameters can be set similarly, using a dictionary in the constructor of the nested parameter.
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using ApiDentalPro.Models.Eligibility;
+
+EligibilityRequestParams parameters = new()
+{
+    Payer = new
+    (
+        new Dictionary<string, JsonElement>
+        {
+            { "custom_nested_param", JsonSerializer.SerializeToElement(42) }
+        }
+    )
+};
+```
+
+Required properties on the nested parameter can also be changed or omitted using the `FromRawUnchecked` method:
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using ApiDentalPro.Models.Eligibility;
+
+EligibilityRequestParams parameters = new()
+{
+    Payer = EligibilityRequestParamsPayer.FromRawUnchecked
+    (
+        new Dictionary<string, JsonElement>
+        {
+            { "required_property", JsonSerializer.SerializeToElement("custom value") }
+        }
+    )
+};
+```
+
+### Response properties
+
+To access undocumented response properties, the `RawData` property can be used:
+
+```csharp
+using System.Text.Json;
+
+var response = client.Eligibility.Request(parameters)
+if (response.RawData.TryGetValue("my_custom_key", out JsonElement value))
+{
+    // Do something with `value`
+}
+```
+
+`RawData` is a `IReadonlyDictionary<string, JsonElement>`. It holds the full data received from the API server.
 
 ### Response validation
 
 In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `string`, but the API could return something else.
 
-By default, the SDK will not throw an exception in this case. It will throw `APIDentalProInvalidDataException` only if you directly access the property.
+By default, the SDK will not throw an exception in this case. It will throw `ApiDentalProInvalidDataException` only if you directly access the property.
 
 If you would prefer to check that the response is completely well-typed upfront, then either call `Validate`:
 
 ```csharp
-var response = client.Eligibility.Request(parameters);
-response.Validate();
+var payers = client.Payer.List();
+payers.Validate();
 ```
 
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using APIDentalPro;
+using ApiDentalPro;
 
-APIDentalProClient client = new() { ResponseValidation = true };
+ApiDentalProClient client = new() { ResponseValidation = true };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):
@@ -260,13 +397,13 @@ Or configure a single method call using [`WithOptions`](#modifying-configuration
 ```csharp
 using System;
 
-var response = await client
+var payers = await client
     .WithOptions(options =>
         options with { ResponseValidation = true }
     )
-    .Eligibility.Request(parameters);
+    .Payer.List(parameters);
 
-Console.WriteLine(response);
+Console.WriteLine(payers);
 ```
 
 ## Semantic versioning
