@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'
 
@@ -26,9 +26,8 @@ jobs:
 
       - name: Publish package to nuget.org
         run: dotnet nuget push
-          ${{ github.workspace }}/artifacts/packages/*.nupkg
+          $(find ${{ github.workspace }}/artifacts/packages/*.nupkg ! -name "*.symbols.nupkg")
           --source https://api.nuget.org/v3/index.json
           --api-key $NUGET_API_KEY
-          --skip-duplicate
         env:
           NUGET_API_KEY: ${{ secrets.API_DENTAL_PRO_NUGET_API_KEY || secrets.NUGET_API_KEY }}
