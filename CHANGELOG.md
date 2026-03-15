@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2026-03-15)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** codegen related update ([976ce7c](https://github.com/api-dental/api-dental-pro-csharp/commit/976ce7c92bf466c9f508a5a022df1b2461a1e9f2))
+
 ## 0.4.0 (2026-03-15)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.3.0...v0.4.0)
