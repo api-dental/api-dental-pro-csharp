@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-03-15)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** manual updates ([703e33b](https://github.com/api-dental/api-dental-pro-csharp/commit/703e33b15bb3267a8014a61825c815401f1fadfb))
+
 ## 0.5.0 (2026-03-15)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.4.1...v0.5.0)
