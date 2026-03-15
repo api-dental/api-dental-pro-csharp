@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ApiDentalPro.Models.Eligibility;
 
 namespace ApiDentalPro.Tests.Services;
 
@@ -7,7 +8,7 @@ public class EligibilityServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Request_Works()
     {
-        await this.client.Eligibility.Request(
+        var response = await this.client.Eligibility.Request(
             new()
             {
                 Payer = new("52133"),
@@ -20,9 +21,10 @@ public class EligibilityServiceTest : TestBase
                     LastName = "Smith",
                     MemberID = "123456789",
                 },
-                Version = "v2",
+                Version = Version.V2,
             },
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 }

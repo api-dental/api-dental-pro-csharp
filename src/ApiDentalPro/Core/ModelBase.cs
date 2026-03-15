@@ -1,6 +1,8 @@
 using System.Text.Json;
 using ApiDentalPro.Exceptions;
+using ApiDentalPro.Models.Eligibility;
 using ApiDentalPro.Models.Payer;
+using ClearCoverage = ApiDentalPro.Models.ClearCoverage;
 
 namespace ApiDentalPro.Core;
 
@@ -21,6 +23,8 @@ public abstract record class ModelBase
         Converters =
         {
             new FrozenDictionaryConverterFactory(),
+            new ApiEnumConverter<string, Version>(),
+            new ApiEnumConverter<string, ClearCoverage::Version>(),
             new ApiEnumConverter<string, Status>(),
         },
     };

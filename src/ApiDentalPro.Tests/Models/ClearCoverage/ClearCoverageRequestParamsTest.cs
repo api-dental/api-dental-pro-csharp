@@ -1,7 +1,8 @@
 using System;
 using System.Text.Json;
 using ApiDentalPro.Core;
-using ApiDentalPro.Models.ClearCoverage;
+using ApiDentalPro.Exceptions;
+using ClearCoverage = ApiDentalPro.Models.ClearCoverage;
 
 namespace ApiDentalPro.Tests.Models.ClearCoverage;
 
@@ -10,7 +11,7 @@ public class ClearCoverageRequestParamsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var parameters = new ClearCoverageRequestParams
+        var parameters = new ClearCoverage::ClearCoverageRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -22,7 +23,7 @@ public class ClearCoverageRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = ClearCoverage::Version.V2,
             Dependent = new()
             {
                 Dob = "dob",
@@ -34,9 +35,13 @@ public class ClearCoverageRequestParamsTest : TestBase
             LocationID = "location_id",
         };
 
-        ClearCoverageRequestParamsPayer expectedPayer = new("52133");
-        Provider expectedProvider = new() { Npi = "1447364856", TaxID = "270872579" };
-        Subscriber expectedSubscriber = new()
+        ClearCoverage::ClearCoverageRequestParamsPayer expectedPayer = new("52133");
+        ClearCoverage::Provider expectedProvider = new()
+        {
+            Npi = "1447364856",
+            TaxID = "270872579",
+        };
+        ClearCoverage::Subscriber expectedSubscriber = new()
         {
             Dob = "01/15/1990",
             FirstName = "John",
@@ -44,8 +49,8 @@ public class ClearCoverageRequestParamsTest : TestBase
             LastName = "Smith",
             MemberID = "123456789",
         };
-        string expectedVersion = "v2";
-        Dependent expectedDependent = new()
+        ApiEnum<string, ClearCoverage::Version> expectedVersion = ClearCoverage::Version.V2;
+        ClearCoverage::Dependent expectedDependent = new()
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -66,7 +71,7 @@ public class ClearCoverageRequestParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new ClearCoverageRequestParams
+        var parameters = new ClearCoverage::ClearCoverageRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -78,7 +83,7 @@ public class ClearCoverageRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = ClearCoverage::Version.V2,
         };
 
         Assert.Null(parameters.Dependent);
@@ -90,7 +95,7 @@ public class ClearCoverageRequestParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
     {
-        var parameters = new ClearCoverageRequestParams
+        var parameters = new ClearCoverage::ClearCoverageRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -102,7 +107,7 @@ public class ClearCoverageRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = ClearCoverage::Version.V2,
 
             // Null should be interpreted as omitted for these properties
             Dependent = null,
@@ -118,7 +123,7 @@ public class ClearCoverageRequestParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        ClearCoverageRequestParams parameters = new()
+        ClearCoverage::ClearCoverageRequestParams parameters = new()
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -130,7 +135,7 @@ public class ClearCoverageRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = ClearCoverage::Version.V2,
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -141,7 +146,7 @@ public class ClearCoverageRequestParamsTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var parameters = new ClearCoverageRequestParams
+        var parameters = new ClearCoverage::ClearCoverageRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -153,7 +158,7 @@ public class ClearCoverageRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = ClearCoverage::Version.V2,
             Dependent = new()
             {
                 Dob = "dob",
@@ -165,7 +170,7 @@ public class ClearCoverageRequestParamsTest : TestBase
             LocationID = "location_id",
         };
 
-        ClearCoverageRequestParams copied = new(parameters);
+        ClearCoverage::ClearCoverageRequestParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
     }
@@ -176,7 +181,7 @@ public class ClearCoverageRequestParamsPayerTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
+        var model = new ClearCoverage::ClearCoverageRequestParamsPayer { ID = "id" };
 
         string expectedID = "id";
 
@@ -186,13 +191,14 @@ public class ClearCoverageRequestParamsPayerTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
+        var model = new ClearCoverage::ClearCoverageRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ClearCoverageRequestParamsPayer>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<ClearCoverage::ClearCoverageRequestParamsPayer>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -200,13 +206,14 @@ public class ClearCoverageRequestParamsPayerTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
+        var model = new ClearCoverage::ClearCoverageRequestParamsPayer { ID = "id" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ClearCoverageRequestParamsPayer>(
-            element,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<ClearCoverage::ClearCoverageRequestParamsPayer>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -217,7 +224,7 @@ public class ClearCoverageRequestParamsPayerTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
+        var model = new ClearCoverage::ClearCoverageRequestParamsPayer { ID = "id" };
 
         model.Validate();
     }
@@ -225,9 +232,9 @@ public class ClearCoverageRequestParamsPayerTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new ClearCoverageRequestParamsPayer { ID = "id" };
+        var model = new ClearCoverage::ClearCoverageRequestParamsPayer { ID = "id" };
 
-        ClearCoverageRequestParamsPayer copied = new(model);
+        ClearCoverage::ClearCoverageRequestParamsPayer copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -238,7 +245,7 @@ public class ProviderTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new ClearCoverage::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string expectedNpi = "npi";
         string expectedTaxID = "tax_id";
@@ -250,10 +257,13 @@ public class ProviderTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new ClearCoverage::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Provider>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Provider>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -261,10 +271,10 @@ public class ProviderTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new ClearCoverage::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Provider>(
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Provider>(
             element,
             ModelBase.SerializerOptions
         );
@@ -280,7 +290,7 @@ public class ProviderTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new ClearCoverage::Provider { Npi = "npi", TaxID = "tax_id" };
 
         model.Validate();
     }
@@ -288,9 +298,9 @@ public class ProviderTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new ClearCoverage::Provider { Npi = "npi", TaxID = "tax_id" };
 
-        Provider copied = new(model);
+        ClearCoverage::Provider copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -301,7 +311,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Subscriber
+        var model = new ClearCoverage::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -326,7 +336,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Subscriber
+        var model = new ClearCoverage::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -336,7 +346,7 @@ public class SubscriberTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Subscriber>(
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Subscriber>(
             json,
             ModelBase.SerializerOptions
         );
@@ -347,7 +357,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Subscriber
+        var model = new ClearCoverage::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -357,7 +367,7 @@ public class SubscriberTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Subscriber>(
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Subscriber>(
             element,
             ModelBase.SerializerOptions
         );
@@ -379,7 +389,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Subscriber
+        var model = new ClearCoverage::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -394,7 +404,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Subscriber
+        var model = new ClearCoverage::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -403,9 +413,67 @@ public class SubscriberTest : TestBase
             MemberID = "member_id",
         };
 
-        Subscriber copied = new(model);
+        ClearCoverage::Subscriber copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class VersionTest : TestBase
+{
+    [Theory]
+    [InlineData(ClearCoverage::Version.V1)]
+    [InlineData(ClearCoverage::Version.V2)]
+    public void Validation_Works(ClearCoverage::Version rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ClearCoverage::Version> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ClearCoverage::Version>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<ApiDentalProInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ClearCoverage::Version.V1)]
+    [InlineData(ClearCoverage::Version.V2)]
+    public void SerializationRoundtrip_Works(ClearCoverage::Version rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ClearCoverage::Version> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ClearCoverage::Version>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ClearCoverage::Version>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ClearCoverage::Version>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -414,7 +482,7 @@ public class DependentTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -439,7 +507,7 @@ public class DependentTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -449,7 +517,10 @@ public class DependentTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Dependent>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Dependent>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -457,7 +528,7 @@ public class DependentTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -467,7 +538,7 @@ public class DependentTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Dependent>(
+        var deserialized = JsonSerializer.Deserialize<ClearCoverage::Dependent>(
             element,
             ModelBase.SerializerOptions
         );
@@ -489,7 +560,7 @@ public class DependentTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -504,7 +575,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Dependent { };
+        var model = new ClearCoverage::Dependent { };
 
         Assert.Null(model.Dob);
         Assert.False(model.RawData.ContainsKey("dob"));
@@ -521,7 +592,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Dependent { };
+        var model = new ClearCoverage::Dependent { };
 
         model.Validate();
     }
@@ -529,7 +600,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             // Null should be interpreted as omitted for these properties
             Dob = null,
@@ -554,7 +625,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             // Null should be interpreted as omitted for these properties
             Dob = null,
@@ -570,7 +641,7 @@ public class DependentTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Dependent
+        var model = new ClearCoverage::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -579,7 +650,7 @@ public class DependentTest : TestBase
             MemberID = "member_id",
         };
 
-        Dependent copied = new(model);
+        ClearCoverage::Dependent copied = new(model);
 
         Assert.Equal(model, copied);
     }

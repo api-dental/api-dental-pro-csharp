@@ -1,7 +1,8 @@
 using System;
 using System.Text.Json;
 using ApiDentalPro.Core;
-using ApiDentalPro.Models.Eligibility;
+using ApiDentalPro.Exceptions;
+using Eligibility = ApiDentalPro.Models.Eligibility;
 
 namespace ApiDentalPro.Tests.Models.Eligibility;
 
@@ -10,7 +11,7 @@ public class EligibilityRequestParamsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var parameters = new EligibilityRequestParams
+        var parameters = new Eligibility::EligibilityRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -22,7 +23,7 @@ public class EligibilityRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = Eligibility::Version.V2,
             Dependent = new()
             {
                 Dob = "dob",
@@ -33,9 +34,9 @@ public class EligibilityRequestParamsTest : TestBase
             },
         };
 
-        EligibilityRequestParamsPayer expectedPayer = new("52133");
-        Provider expectedProvider = new() { Npi = "1447364856", TaxID = "270872579" };
-        Subscriber expectedSubscriber = new()
+        Eligibility::EligibilityRequestParamsPayer expectedPayer = new("52133");
+        Eligibility::Provider expectedProvider = new() { Npi = "1447364856", TaxID = "270872579" };
+        Eligibility::Subscriber expectedSubscriber = new()
         {
             Dob = "01/15/1990",
             FirstName = "John",
@@ -43,8 +44,8 @@ public class EligibilityRequestParamsTest : TestBase
             LastName = "Smith",
             MemberID = "123456789",
         };
-        string expectedVersion = "v2";
-        Dependent expectedDependent = new()
+        ApiEnum<string, Eligibility::Version> expectedVersion = Eligibility::Version.V2;
+        Eligibility::Dependent expectedDependent = new()
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -63,7 +64,7 @@ public class EligibilityRequestParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new EligibilityRequestParams
+        var parameters = new Eligibility::EligibilityRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -75,7 +76,7 @@ public class EligibilityRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = Eligibility::Version.V2,
         };
 
         Assert.Null(parameters.Dependent);
@@ -85,7 +86,7 @@ public class EligibilityRequestParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
     {
-        var parameters = new EligibilityRequestParams
+        var parameters = new Eligibility::EligibilityRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -97,7 +98,7 @@ public class EligibilityRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = Eligibility::Version.V2,
 
             // Null should be interpreted as omitted for these properties
             Dependent = null,
@@ -110,7 +111,7 @@ public class EligibilityRequestParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        EligibilityRequestParams parameters = new()
+        Eligibility::EligibilityRequestParams parameters = new()
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -122,7 +123,7 @@ public class EligibilityRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = Eligibility::Version.V2,
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -133,7 +134,7 @@ public class EligibilityRequestParamsTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var parameters = new EligibilityRequestParams
+        var parameters = new Eligibility::EligibilityRequestParams
         {
             Payer = new("52133"),
             Provider = new() { Npi = "1447364856", TaxID = "270872579" },
@@ -145,7 +146,7 @@ public class EligibilityRequestParamsTest : TestBase
                 LastName = "Smith",
                 MemberID = "123456789",
             },
-            Version = "v2",
+            Version = Eligibility::Version.V2,
             Dependent = new()
             {
                 Dob = "dob",
@@ -156,7 +157,7 @@ public class EligibilityRequestParamsTest : TestBase
             },
         };
 
-        EligibilityRequestParams copied = new(parameters);
+        Eligibility::EligibilityRequestParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
     }
@@ -167,7 +168,7 @@ public class EligibilityRequestParamsPayerTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new EligibilityRequestParamsPayer { ID = "id" };
+        var model = new Eligibility::EligibilityRequestParamsPayer { ID = "id" };
 
         string expectedID = "id";
 
@@ -177,10 +178,10 @@ public class EligibilityRequestParamsPayerTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new EligibilityRequestParamsPayer { ID = "id" };
+        var model = new Eligibility::EligibilityRequestParamsPayer { ID = "id" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<EligibilityRequestParamsPayer>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::EligibilityRequestParamsPayer>(
             json,
             ModelBase.SerializerOptions
         );
@@ -191,10 +192,10 @@ public class EligibilityRequestParamsPayerTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new EligibilityRequestParamsPayer { ID = "id" };
+        var model = new Eligibility::EligibilityRequestParamsPayer { ID = "id" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<EligibilityRequestParamsPayer>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::EligibilityRequestParamsPayer>(
             element,
             ModelBase.SerializerOptions
         );
@@ -208,7 +209,7 @@ public class EligibilityRequestParamsPayerTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new EligibilityRequestParamsPayer { ID = "id" };
+        var model = new Eligibility::EligibilityRequestParamsPayer { ID = "id" };
 
         model.Validate();
     }
@@ -216,9 +217,9 @@ public class EligibilityRequestParamsPayerTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new EligibilityRequestParamsPayer { ID = "id" };
+        var model = new Eligibility::EligibilityRequestParamsPayer { ID = "id" };
 
-        EligibilityRequestParamsPayer copied = new(model);
+        Eligibility::EligibilityRequestParamsPayer copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -229,7 +230,7 @@ public class ProviderTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new Eligibility::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string expectedNpi = "npi";
         string expectedTaxID = "tax_id";
@@ -241,10 +242,13 @@ public class ProviderTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new Eligibility::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Provider>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Provider>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -252,10 +256,10 @@ public class ProviderTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new Eligibility::Provider { Npi = "npi", TaxID = "tax_id" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Provider>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Provider>(
             element,
             ModelBase.SerializerOptions
         );
@@ -271,7 +275,7 @@ public class ProviderTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new Eligibility::Provider { Npi = "npi", TaxID = "tax_id" };
 
         model.Validate();
     }
@@ -279,9 +283,9 @@ public class ProviderTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Provider { Npi = "npi", TaxID = "tax_id" };
+        var model = new Eligibility::Provider { Npi = "npi", TaxID = "tax_id" };
 
-        Provider copied = new(model);
+        Eligibility::Provider copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -292,7 +296,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Subscriber
+        var model = new Eligibility::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -317,7 +321,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Subscriber
+        var model = new Eligibility::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -327,7 +331,7 @@ public class SubscriberTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Subscriber>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Subscriber>(
             json,
             ModelBase.SerializerOptions
         );
@@ -338,7 +342,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Subscriber
+        var model = new Eligibility::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -348,7 +352,7 @@ public class SubscriberTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Subscriber>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Subscriber>(
             element,
             ModelBase.SerializerOptions
         );
@@ -370,7 +374,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Subscriber
+        var model = new Eligibility::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -385,7 +389,7 @@ public class SubscriberTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Subscriber
+        var model = new Eligibility::Subscriber
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -394,9 +398,67 @@ public class SubscriberTest : TestBase
             MemberID = "member_id",
         };
 
-        Subscriber copied = new(model);
+        Eligibility::Subscriber copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class VersionTest : TestBase
+{
+    [Theory]
+    [InlineData(Eligibility::Version.V1)]
+    [InlineData(Eligibility::Version.V2)]
+    public void Validation_Works(Eligibility::Version rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Eligibility::Version> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Eligibility::Version>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<ApiDentalProInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Eligibility::Version.V1)]
+    [InlineData(Eligibility::Version.V2)]
+    public void SerializationRoundtrip_Works(Eligibility::Version rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Eligibility::Version> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Eligibility::Version>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Eligibility::Version>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Eligibility::Version>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -405,7 +467,7 @@ public class DependentTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -430,7 +492,7 @@ public class DependentTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -440,7 +502,10 @@ public class DependentTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Dependent>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Dependent>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -448,7 +513,7 @@ public class DependentTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -458,7 +523,7 @@ public class DependentTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Dependent>(
+        var deserialized = JsonSerializer.Deserialize<Eligibility::Dependent>(
             element,
             ModelBase.SerializerOptions
         );
@@ -480,7 +545,7 @@ public class DependentTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -495,7 +560,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Dependent { };
+        var model = new Eligibility::Dependent { };
 
         Assert.Null(model.Dob);
         Assert.False(model.RawData.ContainsKey("dob"));
@@ -512,7 +577,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Dependent { };
+        var model = new Eligibility::Dependent { };
 
         model.Validate();
     }
@@ -520,7 +585,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             // Null should be interpreted as omitted for these properties
             Dob = null,
@@ -545,7 +610,7 @@ public class DependentTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             // Null should be interpreted as omitted for these properties
             Dob = null,
@@ -561,7 +626,7 @@ public class DependentTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Dependent
+        var model = new Eligibility::Dependent
         {
             Dob = "dob",
             FirstName = "first_name",
@@ -570,7 +635,7 @@ public class DependentTest : TestBase
             MemberID = "member_id",
         };
 
-        Dependent copied = new(model);
+        Eligibility::Dependent copied = new(model);
 
         Assert.Equal(model, copied);
     }
