@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ApiDentalPro.Core;
@@ -32,7 +31,7 @@ public interface IEligibilityService
     /// insurance subscriber. Returns coverage details, deductibles, maximums, and
     /// benefit information from the payer.
     /// </summary>
-    Task<JsonElement> Request(
+    Task<EligibilityRequestResponse> Request(
         EligibilityRequestParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -55,7 +54,7 @@ public interface IEligibilityServiceWithRawResponse
     /// Returns a raw HTTP response for `post /Eligibility`, but is otherwise the
     /// same as <see cref="IEligibilityService.Request(EligibilityRequestParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<JsonElement>> Request(
+    Task<HttpResponse<EligibilityRequestResponse>> Request(
         EligibilityRequestParams parameters,
         CancellationToken cancellationToken = default
     );

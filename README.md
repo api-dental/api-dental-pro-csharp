@@ -25,11 +25,11 @@ See the [`examples`](examples) directory for complete and runnable examples.
 ```csharp
 using System;
 using ApiDentalPro;
-using ApiDentalPro.Models.Eligibility;
+using Eligibility = ApiDentalPro.Models.Eligibility;
 
 ApiDentalProClient client = new();
 
-EligibilityRequestParams parameters = new()
+Eligibility::EligibilityRequestParams parameters = new()
 {
     Payer = new("12345"),
     Provider = new()
@@ -45,7 +45,7 @@ EligibilityRequestParams parameters = new()
         GroupNumber = "22000-00000",
         Dob = "01/15/1990",
     },
-    Version = "v2",
+    Version = Eligibility::Version.V2,
     Dependent = new()
     {
         FirstName = "John",
@@ -117,7 +117,7 @@ The `WithOptions` method does not affect the original client or service.
 
 To send a request to the API Dental Pro API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Eligibility.Request` should be called with an instance of `EligibilityRequestParams`, and it will return an instance of `Task<JsonElement>`.
+For example, `client.Eligibility.Request` should be called with an instance of `EligibilityRequestParams`, and it will return an instance of `Task<EligibilityRequestResponse>`.
 
 ## Raw responses
 
@@ -137,10 +137,10 @@ For non-streaming responses, you can deserialize the response into an instance o
 
 ```csharp
 using System;
-using System.Text.Json;
+using ApiDentalPro.Models.Eligibility;
 
 var response = await client.WithRawResponse.Eligibility.Request(parameters);
-JsonElement deserialized = await response.Deserialize();
+EligibilityRequestResponse deserialized = await response.Deserialize();
 Console.WriteLine(deserialized);
 ```
 
@@ -380,8 +380,8 @@ By default, the SDK will not throw an exception in this case. It will throw `Api
 If you would prefer to check that the response is completely well-typed upfront, then either call `Validate`:
 
 ```csharp
-var payers = client.Payer.List();
-payers.Validate();
+var response = client.Eligibility.Request(parameters);
+response.Validate();
 ```
 
 Or configure the client using the `ResponseValidation` option:
@@ -397,13 +397,13 @@ Or configure a single method call using [`WithOptions`](#modifying-configuration
 ```csharp
 using System;
 
-var payers = await client
+var response = await client
     .WithOptions(options =>
         options with { ResponseValidation = true }
     )
-    .Payer.List(parameters);
+    .Eligibility.Request(parameters);
 
-Console.WriteLine(payers);
+Console.WriteLine(response);
 ```
 
 ## Semantic versioning
