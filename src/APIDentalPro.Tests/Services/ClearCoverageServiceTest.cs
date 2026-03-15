@@ -15,7 +15,13 @@ public class ClearCoverageServiceTest : TestBase
                 Provider = new() { Npi = "npi", TaxID = "tax_id" },
                 Subscriber = new()
                 {
-                    Dob = DateOnly.Parse("2019-12-27"),
+                    Dob =
+#if NET
+                    DateOnly
+#else
+                    DateTimeOffset
+#endif
+                    .Parse("2019-12-27"),
                     FirstName = "first_name",
                     GroupNumber = "group_number",
                     LastName = "last_name",
