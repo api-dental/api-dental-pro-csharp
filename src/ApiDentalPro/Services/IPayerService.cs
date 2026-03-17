@@ -28,8 +28,8 @@ public interface IPayerService
 
     /// <summary>
     /// Retrieve the full list of supported dental insurance payers with their IDs,
-    /// names, features, and status. No sensitive data is required. Use payer IDs
-    /// from this list when making Eligibility or ClearCoverage requests.
+    /// names, features, and status. No sensitive data is required. Use payer IDs from
+    /// this list when making Eligibility or ClearCoverage requests.
     /// </summary>
     Task<PayerListResponse> List(
         PayerListParams? parameters = null,
@@ -51,7 +51,7 @@ public interface IPayerServiceWithRawResponse
     IPayerServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /Payer`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /Payer</c>, but is otherwise the
     /// same as <see cref="IPayerService.List(PayerListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PayerListResponse>> List(
