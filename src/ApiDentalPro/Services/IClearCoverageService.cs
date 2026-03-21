@@ -28,8 +28,8 @@ public interface IClearCoverageService
 
     /// <summary>
     /// Submit an enhanced eligibility and benefits verification request via Vyne
-    /// ClearCoverage. Returns enriched, standardized, and normalized data relevant
-    /// for dental use cases with deep benefit insights across supported payers.
+    /// ClearCoverage. Returns enriched, standardized, and normalized data relevant for
+    /// dental use cases with deep benefit insights across supported payers.
     /// </summary>
     Task<ClearCoverageRequestResponse> Request(
         ClearCoverageRequestParams parameters,
@@ -51,7 +51,7 @@ public interface IClearCoverageServiceWithRawResponse
     IClearCoverageServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /ClearCoverage`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /ClearCoverage</c>, but is otherwise the
     /// same as <see cref="IClearCoverageService.Request(ClearCoverageRequestParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ClearCoverageRequestResponse>> Request(

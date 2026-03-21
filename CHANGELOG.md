@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.1 (2026-03-21)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.6.0...v0.6.1)
+
+### Bug Fixes
+
+* **client:** handle root bodies in requests properly ([6e7339b](https://github.com/api-dental/api-dental-pro-csharp/commit/6e7339bb0bbcedcc534a1567a32ed4d64b7edd33))
+* **docs:** make xml syntactically correct ([dfe612c](https://github.com/api-dental/api-dental-pro-csharp/commit/dfe612c869be928316e00bbc3d500dfce79823bd))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([aff0c12](https://github.com/api-dental/api-dental-pro-csharp/commit/aff0c128246e68eebd71a1fc4dc3388d74a7a62d))
+
 ## 0.6.0 (2026-03-15)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.5.0...v0.6.0)
