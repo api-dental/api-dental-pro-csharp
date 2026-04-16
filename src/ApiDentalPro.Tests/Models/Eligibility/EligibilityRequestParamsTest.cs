@@ -128,7 +128,7 @@ public class EligibilityRequestParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://wg.api.dental/rest/Eligibility"), url);
+        Assert.True(TestBase.UrisEqual(new Uri("https://wg.api.dental/rest/Eligibility"), url));
     }
 
     [Fact]
