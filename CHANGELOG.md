@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.7.0 (2026-04-30)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **client:** enable gzip decompression ([28a0428](https://github.com/api-dental/api-dental-pro-csharp/commit/28a042808c79875fafb7b5962bc65395b1f178f6))
+* support setting headers via env ([d9a086c](https://github.com/api-dental/api-dental-pro-csharp/commit/d9a086cec7ca67bcf0bebc7079c07b9c6c0e8884))
+
+
+### Bug Fixes
+
+* **client:** allow cancelling when enumerating over an http response ([64c8d16](https://github.com/api-dental/api-dental-pro-csharp/commit/64c8d16ae1585b38f24f06d23de377a6f7ce6959))
+* **client:** handle root bodies in requests properly ([6e7339b](https://github.com/api-dental/api-dental-pro-csharp/commit/6e7339bb0bbcedcc534a1567a32ed4d64b7edd33))
+* **docs:** make xml syntactically correct ([dfe612c](https://github.com/api-dental/api-dental-pro-csharp/commit/dfe612c869be928316e00bbc3d500dfce79823bd))
+* **tests:** round-trip urls correctly ([06fb914](https://github.com/api-dental/api-dental-pro-csharp/commit/06fb914acf21a2dd230cb32ead201db856792dad))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([b7b69d4](https://github.com/api-dental/api-dental-pro-csharp/commit/b7b69d483b2c767749617e0af05880b4eb227891))
+* **internal:** tweak CI branches ([aff0c12](https://github.com/api-dental/api-dental-pro-csharp/commit/aff0c128246e68eebd71a1fc4dc3388d74a7a62d))
+* **internal:** update gitignore ([3d69bda](https://github.com/api-dental/api-dental-pro-csharp/commit/3d69bda70b5295832c20fde7af1edf84c3618e50))
+
 ## 0.6.0 (2026-03-15)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/api-dental/api-dental-pro-csharp/compare/v0.5.0...v0.6.0)
