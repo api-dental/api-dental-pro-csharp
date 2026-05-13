@@ -51,7 +51,7 @@ public interface IEligibilityServiceWithRawResponse
     IEligibilityServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /Eligibility`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /Eligibility</c>, but is otherwise the
     /// same as <see cref="IEligibilityService.Request(EligibilityRequestParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<EligibilityRequestResponse>> Request(

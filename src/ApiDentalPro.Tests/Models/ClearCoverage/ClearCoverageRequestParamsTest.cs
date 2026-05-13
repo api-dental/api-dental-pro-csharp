@@ -140,7 +140,7 @@ public class ClearCoverageRequestParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://wg.api.dental/rest/ClearCoverage"), url);
+        Assert.True(TestBase.UrisEqual(new Uri("https://wg.api.dental/rest/ClearCoverage"), url));
     }
 
     [Fact]
